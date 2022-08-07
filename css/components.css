@@ -1,0 +1,77 @@
+@layer components {
+    /** NAV + MENU */
+    .nav-item {
+        @apply block border-b-2 border-transparent py-1 text-sm font-medium uppercase text-clr-text-dark transition-colors;
+    }
+    @media (hover: hover) {
+        .nav-item {
+            @apply group-hover:border-clr-text group-hover:text-clr-text-dark;
+        }
+    }
+    .nav-item.nav-active {
+        @apply border-primary text-primary group-hover:border-primary group-hover:text-primary;
+    }
+
+    .menu-mobile {
+        @apply fixed inset-0 transition-all duration-300 md:hidden;
+        @apply invisible opacity-0 [&.open]:visible [&.open]:opacity-100;
+        @apply [&_.overlay]:opacity-0 [&.open_.overlay]:opacity-100;
+        @apply [&_.menu-content]:translate-x-[200%] sm:[&_.menu-content]:translate-x-[-200%] [&.open_.menu-content]:-translate-x-0;
+    }
+
+    /** GRID */
+    .container-grid {
+        @apply grid w-full;
+        @apply sm:max-w-[50rem] md:max-w-[75rem] lg:max-w-[92rem];
+        @apply gap-3 sm:gap-5 md:gap-7;
+    }
+
+    /** GRID IMG + IMG CARD  */
+    .img-grid {
+        @apply grid w-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+        @apply sm:max-w-[50rem] md:max-w-[75rem] lg:max-w-[92rem];
+        @apply gap-3 sm:gap-5 md:gap-7;
+    }
+
+    .img-card {
+        @apply relative [&_.overlay]:invisible;
+    }
+    @media (hover: hover) {
+        .img-card {
+            @apply [&_.overlay]:visible [&_.not-hover]:hidden;
+        }
+    }
+
+    /** TAB */
+    .tab-create-photo {
+        @apply inline-flex h-8 rounded-lg border border-light-gray text-sm font-semibold;
+    }
+    .tab-create-photo .tab-item {
+        @apply inline-flex items-center justify-center rounded-lg px-6 hover:bg-primary/[0.12];
+    }
+    .tab-create-photo .tab-item + .tab-item {
+        @apply -ml-3 inline-flex items-center justify-center rounded-lg px-6;
+    }
+    .tab-create-photo .tab-item.active {
+        @apply bg-primary text-white;
+    }
+    .tab-create-photo .tab-item > .icon {
+        @apply pr-2;
+    }
+
+    /** TEXT INPUT */
+    .text-input {
+        @apply h-[2.375rem] w-full rounded-lg border border-light-gray px-3 caret-primary focus:border-primary;
+    }
+
+    /** RADIO  */
+    .radio-circle {
+        @apply flex h-5 w-5 cursor-pointer items-center justify-center rounded-full border-2 border-primary after:h-3 after:w-3 after:rounded-full after:bg-primary after:opacity-0;
+    }
+    .input-radio:checked + * .radio-circle {
+        @apply after:opacity-100;
+    }
+    .input-radio:disabled + * .radio-circle {
+        @apply cursor-default border-light-gray opacity-70;
+    }
+}

@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ['./*.{html,js}'],
+    content: ['./*.{html,js}', './upload/*.{html,js}'],
     theme: {
         extend: {
             spacing: {
@@ -14,7 +14,7 @@ module.exports = {
                     'hsl(var(--clr-primary-h) var(--clr-primary-s) var(--clr-primary-hover-l) / <alpha-value>)',
                 'clr-text': 'hsl(var(--clr-text) / <alpha-value>)',
                 'clr-text-dark': 'hsl(var(--clr-text-dark) / <alpha-value>)',
-                'light-gray': 'hsl(var(--light-gray) / <alpha-value>)',
+                'light-gray': 'hsl(var(--clr-light-gray) / <alpha-value>)',
                 white: 'hsl(var(--clr-white) / <alpha-value>)',
 
                 transparent: 'transparent',

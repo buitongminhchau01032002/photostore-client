@@ -1,0 +1,32 @@
+@layer components {
+    .btn {
+        @apply inline-flex cursor-pointer items-center justify-center text-sm transition-colors disabled:pointer-events-none disabled:opacity-50;
+    }
+    .btn-sm {
+        @apply h-[30px] min-w-[84px] rounded-[6px] px-5 font-semibold;
+    }
+    .btn-md {
+        @apply h-[38px] min-w-[100px] rounded-lg px-6 font-bold;
+    }
+    .btn-lg {
+        @apply h-[42px] min-w-[120px] rounded-lg px-7 font-bold;
+    }
+    .btn-sm.btn-square {
+        @apply min-w-[30px] max-w-[30px] p-0;
+    }
+    .btn-md.btn-square {
+        @apply min-w-[38px] max-w-[38px] p-0;
+    }
+    .btn-lg.btn-square {
+        @apply min-w-[42px] max-w-[42px] p-0;
+    }
+    .btn-fill {
+        @apply bg-primary text-white hover:bg-primary-hover;
+    }
+    .btn-outline {
+        @apply border border-primary text-primary hover:bg-primary hover:bg-opacity-[0.12];
+    }
+    .btn-text {
+        @apply text-primary hover:bg-primary hover:bg-opacity-[0.12];
+    }
+}

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>PhotoStore</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="../css/tailwind.css" />
+        <script src="https://kit.fontawesome.com/0b05c9f6c4.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <header
+            class="p-body fixed inset-0 z-header flex h-h-header items-center justify-between bg-white shadow-sm shadow-gray-300"
+        >
+            <!--* Menu toggle (sm only) -->
+            <div class="hidden flex-1 sm:block md:hidden">
+                <button
+                    id="sm-menu-open-btn"
+                    class="-ml-2 cursor-pointer p-2 text-xl text-clr-text transition-colors hover:text-clr-text-dark"
+                >
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+
+            <!--* Logo (all)  -->
+            <div class="flex flex-1 items-center sm:flex-initial md:flex-1">
+                <a href="/" class="inline-block h-8 cursor-pointer sm:h-9">
+                    <img
+                        src="../assets/logo.svg"
+                        alt="Logo"
+                        class="h-full object-contain object-left"
+                    />
+                </a>
+            </div>
+
+            <!--* nav (md) -->
+            <nav class="hidden items-center md:flex">
+                <a href="/" class="group p-2"><span class="nav-item">Trang chủ</span></a>
+                <a href="/upload/" class="group p-2"
+                    ><span class="nav-item nav-active">Tạo ảnh</span></a
+                >
+                <a href="#" class="group p-2"><span class="nav-item">Giới thiệu</span></a>
+            </nav>
+            <!--* action group (all)  -->
+            <div class="flex items-center justify-end sm:flex-1">
+                <a href="#" class="btn btn-md btn-fill">Đăng nhập</a>
+                <!-- <div class="flex cursor-pointer items-center">
+                    <div class="mr-2 hidden text-right sm:block">
+                        <div class="text-sm font-semibold text-clr-text-dark">Minh Châu</div>
+                        <div class="text-xs font-medium text-clr-text">@minhchau</div>
+                    </div>
+                    <div class="h-[38px] w-[38px] rounded-full shadow-sm shadow-gray-500">
+                        <img
+                            src="../assets/avatar.PNG"
+                            alt="avatar"
+                            class="h-full w-full rounded-full object-cover"
+                        />
+                    </div>
+                </div> -->
+            </div>
+
+            <!--* Menu open (mobile only) -->
+            <div class="sm:hidden">
+                <button
+                    id="menu-open-btn"
+                    class="-mr-2 ml-2 cursor-pointer p-2 text-xl text-clr-text"
+                >
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+
+            <!--* Menu mobile and tablet (mobile + sm) -->
+            <div id="menu-mobile" class="menu-mobile">
+                <div
+                    id="menu-moblie-overlay"
+                    class="overlay absolute inset-0 hidden bg-black/50 transition-opacity duration-200 sm:block"
+                ></div>
+                <div
+                    class="menu-content p-body stack absolute inset-0 w-full bg-white transition-transform duration-300 ease-linear sm:w-96"
+                >
+                    <div class="flex h-h-header items-center justify-between">
+                        <a href="/" class="inline-block h-8 cursor-pointer sm:h-9">
+                            <img
+                                src="../assets/logo.svg"
+                                alt="Logo"
+                                class="h-full object-contain object-left"
+                            />
+                        </a>
+                        <button
+                            id="menu-close-btn"
+                            class="-mr-2 cursor-pointer px-2 text-2xl hover:text-clr-text-dark"
+                        >
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                    <div class="stack flex-1 items-center pt-11">
+                        <a href="/" class="group flex w-full justify-center py-2">
+                            <span class="nav-item">Trang chủ</span>
+                        </a>
+                        <a href="/upload/" class="group flex w-full justify-center py-2">
+                            <span class="nav-item nav-active">Tạo ảnh</span>
+                        </a>
+                        <a href="#" class="group flex w-full justify-center py-2">
+                            <span class="nav-item">Giới thiệu</span>
+                        </a>
+                    </div>
+                    <div class="stack mb-4">
+                        <!-- <a href="#" class="btn btn-fill btn-md w-full"> Đăng nhập </a> -->
+                        <a class="flex cursor-pointer items-center justify-between">
+                            <div class="flex">
+                                <div
+                                    class="h-[38px] w-[38px] rounded-full shadow-sm shadow-gray-500"
+                                >
+                                    <img
+                                        src="../assets/avatar.PNG"
+                                        alt="avatar"
+                                        class="h-full w-full rounded-full object-cover"
+                                    />
+                                </div>
+                                <div class="ml-2">
+                                    <div class="text-sm font-semibold text-clr-text-dark">
+                                        Minh Châu
+                                    </div>
+                                    <div class="text-xs font-medium text-clr-text">@minhchau</div>
+                                </div>
+                            </div>
+                            <button class="-mr-2 cursor-pointer px-2 text-xl hover:text-primary">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!--* BANNER  -->
+        <section class="p-body mt-h-header py-8 sm:py-11 md:py-14">
+            <h2
+                class="text-center text-xl font-bold text-clr-text-dark sm:text-2xl md:text-[1.75rem]"
+            >
+                Tạo ảnh
+            </h2>
+        </section>
+
+        <!--* FORM CREATE PHOTO -->
+        <section class="flex justify-center">
+            <div class="md:p-body container-grid md:grid-cols-2">
+                <div class="p-body stack items-center md:px-0">
+                    <div class="tab-create-photo sm:self-start">
+                        <button class="tab-item active">
+                            <i class="fa-solid fa-link icon"></i>
+                            <span>URL</span>
+                        </button>
+                        <button class="tab-item">
+                            <i class="fa-solid fa-file-arrow-up icon"></i>
+                            <span>Chọn file</span>
+                        </button>
+                    </div>
+
+                    <!--* URL  -->
+                    <input
+                        class="text-input mt-6 md:mt-2"
+                        type="text"
+                        placeholder="https//example.com/photo/1234"
+                    />
+
+                    <!--* FILE  -->
+                    <!--todo: File  -->
+
+                    <div
+                        class="mt-4 flex w-full justify-center rounded-lg md:mt-6 md:bg-light-gray"
+                    >
+                        <img
+                            class="block max-h-[27rem] rounded-lg sm:max-h-[30rem]"
+                            src="https://picsum.photos/400/300"
+                            alt="Photo"
+                        />
+                    </div>
+                </div>
+
+                <div class="p-body mt-8 md:mt-2 md:px-0">
+                    <div>
+                        <div class="mb-2 font-bold text-clr-text-dark">Tiêu đề</div>
+                        <input class="text-input" type="text" placeholder="Mùa thu tại Đà Lạt" />
+                    </div>
+                    <div class="mt-5">
+                        <div class="mb-2 font-bold text-clr-text-dark">Mô tả</div>
+                        <input
+                            class="text-input"
+                            type="text"
+                            placeholder="Khu rừng lá vàng ở Đà Lạt vào mùa thu"
+                        />
+                    </div>
+                    <div class="mt-5">
+                        <div class="mb-2 font-bold text-clr-text-dark">Ai có thể xem ảnh này</div>
+                        <div class="flex">
+                            <input
+                                class="input-radio hidden [&:disabled+label]:cursor-default"
+                                type="radio"
+                                id="is-public-photo--public"
+                                name="is-public-photo"
+                                value="public"
+                                checked
+                            />
+                            <label
+                                for="is-public-photo--public"
+                                class="flex cursor-pointer items-center"
+                            >
+                                <div class="radio-circle"></div>
+                                <span class="pl-2">Mọi người</span>
+                            </label>
+                            <input
+                                class="input-radio hidden [&:disabled+label]:cursor-default"
+                                type="radio"
+                                id="is-public-photo--private"
+                                name="is-public-photo"
+                                value="private"
+                            />
+                            <label
+                                for="is-public-photo--private"
+                                class="ml-6 flex cursor-pointer items-center"
+                            >
+                                <div class="radio-circle"></div>
+                                <span class="pl-2">Chỉ mình tôi</span>
+                            </label>
+                        </div>
+                        <button class="btn btn-md btn-fill sm:btn-lg mt-8 w-full sm:w-auto">
+                            Tạo ảnh
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="h-48"></footer>
+
+        <script>
+            const menu = document.getElementById('menu-mobile');
+            const menuOverlay = document.getElementById('menu-moblie-overlay');
+            const menuOpenBtn = document.getElementById('menu-open-btn');
+            const smMenuOpenBtn = document.getElementById('sm-menu-open-btn');
+            const menuCloseBtn = document.getElementById('menu-close-btn');
+            const openMenu = () => {
+                menu?.classList.add('open');
+            };
+            const closeMenu = () => {
+                menu?.classList.remove('open');
+            };
+
+            menuOpenBtn?.addEventListener('click', openMenu);
+            smMenuOpenBtn?.addEventListener('click', openMenu);
+            menuOverlay?.addEventListener('click', closeMenu);
+            menuCloseBtn?.addEventListener('click', closeMenu);
+        </script>
+    </body>
+</html>

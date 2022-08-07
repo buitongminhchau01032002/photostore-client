@@ -41,13 +41,13 @@
 
             <!--* nav (md) -->
             <nav class="hidden items-center md:flex">
-                <a href="#" class="group p-2"><span class="nav-item nav-active">Trang chủ</span></a>
-                <a href="#" class="group p-2"><span class="nav-item">Tạo ảnh</span></a>
+                <a href="/" class="group p-2"><span class="nav-item nav-active">Trang chủ</span></a>
+                <a href="/upload/" class="group p-2"><span class="nav-item">Tạo ảnh</span></a>
                 <a href="#" class="group p-2"><span class="nav-item">Giới thiệu</span></a>
             </nav>
             <!--* action group (all)  -->
             <div class="flex items-center justify-end sm:flex-1">
-                <a href="#" class="btn btn-md btn-fill">Đăng nhập</a>
+                <a href="#/login" class="btn btn-md btn-fill">Đăng nhập</a>
                 <!-- <div class="flex cursor-pointer items-center">
                     <div class="mr-2 hidden text-right sm:block">
                         <div class="text-sm font-semibold text-clr-text-dark">Minh Châu</div>
@@ -97,17 +97,17 @@
                             <i class="fa-solid fa-xmark"></i>
                         </button>
                     </div>
-                    <div class="stack flex-1 items-center pt-11">
-                        <a href="#" class="group flex w-full justify-center py-2">
+                    <nav class="stack flex-1 items-center pt-11">
+                        <a href="/" class="group flex w-full justify-center py-2">
                             <span class="nav-item nav-active">Trang chủ</span>
                         </a>
-                        <a href="#" class="group flex w-full justify-center py-2">
+                        <a href="/upload/" class="group flex w-full justify-center py-2">
                             <span class="nav-item">Tạo ảnh</span>
                         </a>
                         <a href="#" class="group flex w-full justify-center py-2">
                             <span class="nav-item">Giới thiệu</span>
                         </a>
-                    </div>
+                    </nav>
                     <div class="stack mb-4">
                         <!-- <a href="#" class="btn btn-fill btn-md w-full"> Đăng nhập </a> -->
                         <a class="flex cursor-pointer items-center justify-between">
@@ -165,7 +165,6 @@
         </section>
 
         <!--* IMG LIST -->
-
         <section class="sm:p-body flex justify-center">
             <div class="img-grid">
                 <div class="img-card">
@@ -734,6 +733,8 @@
                 </div>
             </div>
         </section>
+
+        <footer class="h-48"></footer>
 
         <script>
             const menu = document.getElementById('menu-mobile');

@@ -1,0 +1,38 @@
+@layer base {
+    :root {
+        --clr-primary-h: 337deg;
+        --clr-primary-s: 79%;
+        --clr-primary-l: 61%;
+        --clr-primary-hover-l: 54%;
+        --clr-primary: var(--clr-primary-h) var(--clr-primary-s) var(--clr-primary-l);
+        --clr-text: 0deg 0% 47%;
+        --clr-text-dark: 0deg 0% 15%;
+        --clr-light-gray: 0deg 0% 78%;
+        --clr-white: 337deg 0% 100%;
+        --h-header: 56px;
+    }
+    @screen md {
+        :root {
+            --h-header: 60px;
+        }
+    }
+    body {
+        font-family: 'Open Sans', sans-serif, ui-sans-serif, system-ui, -apple-system,
+            BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+            'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+        color: hsl(var(--clr-text));
+        overflow-x: hidden;
+    }
+
+    p {
+        color: hsl(var(--clr-text));
+    }
+
+    .p-body {
+        @apply px-3 sm:px-5 md:px-7 lg:px-11;
+    }
+
+    input {
+        outline: none;
+    }
+}
