@@ -42,9 +42,7 @@
             <!--* nav (md) -->
             <nav class="hidden items-center md:flex">
                 <a href="/" class="group p-2"><span class="nav-item">Trang chủ</span></a>
-                <a href="/upload/" class="group p-2"
-                    ><span class="nav-item nav-active">Tạo ảnh</span></a
-                >
+                <a href="/upload/" class="group p-2"><span class="nav-item">Tạo ảnh</span></a>
                 <a href="#" class="group p-2"><span class="nav-item">Giới thiệu</span></a>
             </nav>
             <!--* action group (all)  -->
@@ -104,7 +102,7 @@
                             <span class="nav-item">Trang chủ</span>
                         </a>
                         <a href="/upload/" class="group flex w-full justify-center py-2">
-                            <span class="nav-item nav-active">Tạo ảnh</span>
+                            <span class="nav-item">Tạo ảnh</span>
                         </a>
                         <a href="#" class="group flex w-full justify-center py-2">
                             <span class="nav-item">Giới thiệu</span>
@@ -123,7 +121,7 @@
                                         class="h-full w-full rounded-full object-cover"
                                     />
                                 </div>
-                                <div class="stack ml-2 justify-center">
+                                <div class="ml-2">
                                     <div class="text-sm font-semibold text-clr-text-dark">
                                         Minh Châu
                                     </div>
@@ -139,100 +137,75 @@
             </div>
         </header>
 
-        <!--* BANNER  -->
-        <section class="p-body mt-h-header py-8 sm:py-11 md:py-14">
-            <h2
-                class="text-center text-xl font-bold text-clr-text-dark sm:text-2xl md:text-[1.75rem]"
-            >
-                Tạo ảnh
-            </h2>
-        </section>
-
-        <!--* FORM CREATE PHOTO -->
-        <section class="flex justify-center">
-            <div class="md:p-body container-grid md:grid-cols-2">
-                <div class="p-body stack items-center md:px-0">
-                    <div class="tab-create-photo sm:self-start">
-                        <button class="tab-item active">
-                            <i class="fa-solid fa-link icon"></i>
-                            <span>URL</span>
-                        </button>
-                        <button class="tab-item">
-                            <i class="fa-solid fa-file-arrow-up icon"></i>
-                            <span>Chọn file</span>
-                        </button>
-                    </div>
-
-                    <!--* URL  -->
-                    <input
-                        class="text-input mt-6 md:mt-2"
-                        type="text"
-                        placeholder="https//example.com/photo/1234"
+        <!--* PHOTO -->
+        <section class="mt-h-header flex justify-center">
+            <div class="md:p-body container-grid sm:mt-4 md:mt-6 md:grid-cols-2">
+                <!--* LEFT GROUP -->
+                <div class="flex w-full justify-center">
+                    <img
+                        class="max-h-[calc(100vh_-_var(--h-header))] sm:max-h-[calc(100vh_-_var(--h-header)_-_16px)] sm:rounded-lg md:max-h-[calc(100vh_-_var(--h-header)_-_24px)]"
+                        src="https://picsum.photos/800/1000"
+                        alt="Photo"
                     />
-
-                    <!--* FILE  -->
-                    <!--todo: File  -->
-
-                    <div
-                        class="mt-4 flex w-full justify-center rounded-lg md:mt-6 md:bg-light-gray"
-                    >
-                        <img
-                            class="block max-h-[27rem] rounded-lg sm:max-h-[30rem]"
-                            src="https://picsum.photos/400/300"
-                            alt="Photo"
-                        />
-                    </div>
                 </div>
-
-                <div class="p-body mt-8 md:mt-2 md:px-0">
-                    <div>
-                        <div class="mb-2 font-bold text-clr-text-dark">Tiêu đề</div>
-                        <input class="text-input" type="text" placeholder="Mùa thu tại Đà Lạt" />
-                    </div>
-                    <div class="mt-5">
-                        <div class="mb-2 font-bold text-clr-text-dark">Mô tả</div>
-                        <input
-                            class="text-input"
-                            type="text"
-                            placeholder="Khu rừng lá vàng ở Đà Lạt vào mùa thu"
-                        />
-                    </div>
-                    <div class="mt-5">
-                        <div class="mb-2 font-bold text-clr-text-dark">Ai có thể xem ảnh này</div>
-                        <div class="flex">
-                            <input
-                                class="input-radio hidden [&:disabled+label]:cursor-default"
-                                type="radio"
-                                id="is-public-photo--public"
-                                name="is-public-photo"
-                                value="public"
-                                checked
+                <!--* RIGHT GROUP -->
+                <div class="p-body md:px-0">
+                    <h2 class="mt-2 text-lg font-bold text-clr-text-dark md:mt-0">
+                        Mùa thu tại Đà Lạt
+                    </h2>
+                    <p class="mt-1 mb-4 text-justify text-sm">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus
+                        temporibus cumque dicta magni rerum assumenda quam nesciunt ad atque
+                        suscipit consectetur
+                    </p>
+                    <!--* user  -->
+                    <a href="#/user" class="group flex sm:inline-flex">
+                        <div class="h-[34px] w-[34px] rounded-full shadow-sm shadow-gray-500">
+                            <img
+                                src="../assets/avatar.PNG"
+                                alt="avatar"
+                                class="h-full w-full rounded-full object-cover"
                             />
-                            <label
-                                for="is-public-photo--public"
-                                class="flex cursor-pointer items-center"
-                            >
-                                <div class="radio-circle"></div>
-                                <span class="pl-2">Mọi người</span>
-                            </label>
-                            <input
-                                class="input-radio hidden [&:disabled+label]:cursor-default"
-                                type="radio"
-                                id="is-public-photo--private"
-                                name="is-public-photo"
-                                value="private"
-                            />
-                            <label
-                                for="is-public-photo--private"
-                                class="ml-6 flex cursor-pointer items-center"
-                            >
-                                <div class="radio-circle"></div>
-                                <span class="pl-2">Chỉ mình tôi</span>
-                            </label>
                         </div>
-                        <button class="btn btn-md btn-fill sm:btn-lg mt-8 w-full sm:w-auto">
-                            Tạo ảnh
-                        </button>
+                        <div class="stack ml-2 justify-center">
+                            <div
+                                class="text-sm font-semibold text-primary group-hover:text-primary-hover"
+                            >
+                                Minh Châu
+                            </div>
+                            <div class="text-xs font-medium text-clr-text">@minhchau</div>
+                        </div>
+                    </a>
+                    <!--* public user  -->
+                    <!-- <div href="#/user" class="flex">
+                        <div class="h-[34px] w-[34px] rounded-full shadow-sm shadow-gray-500">
+                            <img
+                                src="../assets/avatar.PNG"
+                                alt="avatar"
+                                class="h-full w-full rounded-full object-cover"
+                            />
+                        </div>
+                        <div class="stack ml-2 justify-center">
+                            <div class="text-sm font-semibold text-clr-text">Cộng đồng</div>
+                        </div>
+                    </div> -->
+
+                    <div>
+                        <div class="mt-7 flex sm:inline-flex">
+                            <button
+                                class="btn btn-md btn-fill sm:btn-lg flex-1 sm:w-52 sm:flex-initial"
+                            >
+                                Tải xuống
+                            </button>
+                            <a class="btn btn-md btn-outline sm:btn-lg btn-square ml-2">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+                            <button
+                                class="btn btn-md btn-outline sm:btn-lg btn-square ml-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white"
+                            >
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
