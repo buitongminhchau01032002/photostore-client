@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>PhotoStore</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="css/tailwind.css" />
+        <script src="https://kit.fontawesome.com/0b05c9f6c4.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <header
+            class="p-body fixed inset-0 z-header flex h-h-header items-center justify-between bg-white shadow-sm shadow-gray-300"
+        >
+            <!--* Menu toggle (sm only) -->
+            <div class="hidden flex-1 sm:block md:hidden">
+                <button
+                    id="sm-menu-open-btn"
+                    class="cursor-pointer p-2 text-xl text-clr-text transition-colors hover:text-clr-text-dark"
+                >
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+
+            <!--* Logo (all)  -->
+            <div class="flex flex-1 items-center sm:flex-initial md:flex-1">
+                <a href="/" class="inline-block h-8 cursor-pointer sm:h-9">
+                    <img
+                        src="./assets/logo.svg"
+                        alt="Logo"
+                        class="h-full object-contain object-left"
+                    />
+                </a>
+            </div>
+
+            <!--* nav (md) -->
+            <nav class="hidden items-center md:flex">
+                <a href="#" class="group p-2"><span class="nav-item nav-active">Trang chủ</span></a>
+                <a href="#" class="group p-2"><span class="nav-item">Tạo ảnh</span></a>
+                <a href="#" class="group p-2"><span class="nav-item">Giới thiệu</span></a>
+            </nav>
+            <!--* action group (all)  -->
+            <div class="flex items-center justify-end sm:flex-1">
+                <a href="#" class="btn btn-md btn-fill">Đăng nhập</a>
+                <!-- <div class="flex cursor-pointer items-center">
+                    <div class="mr-2 hidden text-right sm:block">
+                        <div class="text-sm font-semibold text-clr-text-dark">Minh Châu</div>
+                        <div class="text-xs font-medium text-clr-text">@minhchau</div>
+                    </div>
+                    <div class="h-[38px] w-[38px] rounded-full shadow-sm shadow-gray-500">
+                        <img
+                            src="./assets/avatar.PNG"
+                            alt="avatar"
+                            class="h-full w-full rounded-full object-cover"
+                        />
+                    </div>
+                </div> -->
+            </div>
+
+            <!--* Menu open (mobile only) -->
+            <div class="sm:hidden">
+                <button id="menu-open-btn" class="ml-2 cursor-pointer p-2 text-xl text-clr-text">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+
+            <!--* Menu mobile and tablet (mobile + sm) -->
+            <div id="menu-mobile" class="menu-mobile">
+                <div
+                    id="menu-moblie-overlay"
+                    class="overlay absolute inset-0 hidden bg-black/50 transition-opacity duration-200 sm:block"
+                ></div>
+                <div
+                    class="menu-content p-body stack absolute inset-0 w-full bg-white transition-transform duration-300 ease-linear sm:w-96"
+                >
+                    <div class="flex h-h-header items-center justify-between">
+                        <a href="/" class="inline-block h-8 cursor-pointer sm:h-9">
+                            <img
+                                src="./assets/logo.svg"
+                                alt="Logo"
+                                class="h-full object-contain object-left"
+                            />
+                        </a>
+                        <button
+                            id="menu-close-btn"
+                            class="-mr-2 cursor-pointer px-2 text-2xl hover:text-clr-text-dark"
+                        >
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                    <div class="stack flex-1 items-center pt-11">
+                        <a href="#" class="group flex w-full justify-center py-2">
+                            <span class="nav-item nav-active">Trang chủ</span>
+                        </a>
+                        <a href="#" class="group flex w-full justify-center py-2">
+                            <span class="nav-item">Tạo ảnh</span>
+                        </a>
+                        <a href="#" class="group flex w-full justify-center py-2">
+                            <span class="nav-item">Giới thiệu</span>
+                        </a>
+                    </div>
+                    <div class="stack mb-4">
+                        <!-- <a href="#" class="btn btn-fill btn-md w-full"> Đăng nhập </a> -->
+                        <a class="flex cursor-pointer items-center justify-between">
+                            <div class="flex">
+                                <div
+                                    class="h-[38px] w-[38px] rounded-full shadow-sm shadow-gray-500"
+                                >
+                                    <img
+                                        src="./assets/avatar.PNG"
+                                        alt="avatar"
+                                        class="h-full w-full rounded-full object-cover"
+                                    />
+                                </div>
+                                <div class="ml-2">
+                                    <div class="text-sm font-semibold text-clr-text-dark">
+                                        Minh Châu
+                                    </div>
+                                    <div class="text-xs font-medium text-clr-text">@minhchau</div>
+                                </div>
+                            </div>
+                            <button class="-mr-2 cursor-pointer px-2 text-xl hover:text-primary">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!--* BANNER  -->
+        <section class="p-body mt-h-header py-12 sm:py-14 md:py-16">
+            <div class="mb-6 hidden h-9 justify-center md:flex">
+                <img
+                    src="/assets/logo.svg"
+                    alt="Photostore"
+                    class="h-full object-contain object-center"
+                />
+            </div>
+            <h2 class="text-center text-xl font-bold text-clr-text sm:text-2xl md:text-[1.75rem]">
+                Lưu lại những bức ảnh tuyệt vời của bạn
+            </h2>
+            <div class="mt-2 flex justify-center md:mt-4">
+                <div class="stack mx-0.5 w-28 items-center">
+                    <span class="text-[2rem] font-light text-primary">50</span>
+                    <span class="text-center text-sm">Ảnh đã tải lên</span>
+                </div>
+                <div class="stack mx-0.5 w-28 items-center">
+                    <span class="text-[2rem] font-light text-primary">3</span>
+                    <span class="text-center text-sm">Người đăng ký</span>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-center sm:mt-7">
+                <button class="btn btn-md btn-fill w-full sm:w-auto">Tạo ảnh ngay</button>
+            </div>
+        </section>
+
+        <!--* IMG LIST -->
+
+        <section class="sm:p-body flex justify-center">
+            <div class="img-grid">
+                <div class="img-card">
+                    <a
+                        href="#"
+                        class="block aspect-[4/3] cursor-pointer overflow-hidden sm:rounded-lg"
+                    >
+                        <img
+                            src="https://picsum.photos/200/300"
+                            alt="image"
+                            class="h-full w-full object-cover object-center"
+                        />
+                    </a>
+
+                    <!--* Content in screen can not hover  -->
+                    <div class="not-hover flex items-start p-2 sm:pb-0">
+                        <div class="stack flex-1">
+                            <!--* user  -->
+                            <a href="#user" class="group inline-flex cursor-pointer items-center">
+                                <img
+                                    src="/assets/avatar.PNG"
+                                    alt="avatar"
+                                    class="h-6 w-6 rounded-full object-cover"
+                                />
+                                <p
+                                    class="group-hover ml-2 text-sm font-semibold text-primary group-hover:text-primary-hover"
+                                >
+                                    Minh Chau
+                                </p>
+                            </a>
+                            <!--todo: Public user  -->
+                            <!-- <div class="inline-flex cursor-pointer items-center">
+                                <img
+                                    src="/assets/avatar.PNG"
+                                    alt="avatar"
+                                    class="h-6 w-6 rounded-full object-cover"
+                                />
+                                <p class="group-hover ml-2 text-sm font-semibold">Cộng đồng</p>
+                            </div> -->
+
+                            <a href="#photo" class="pt-1 pb-2 text-sm font-bold text-clr-text-dark">
+                                <h3>Rừng cây lá vàng mùa thu</h3>
+                            </a>
+                        </div>
+                        <button class="btn btn-md btn-fill btn-square ml-1 mt-2 text-base">
+                            <i class="fa-solid fa-download"></i>
+                        </button>
+                    </div>
+
+                    <!--* Content in screen can hover  -->
+                    <div
+                        class="overlay stack absolute inset-0 rounded-lg bg-gradient-to-t from-black/80 via-black/20 to-black/0 opacity-0 transition-opacity hover:opacity-100"
+                    >
+                        <a href="#photo" class="flex-1"></a>
+                        <div class="flex items-end px-2 pt-2">
+                            <div class="stack flex-1">
+                                <!--* User -->
+                                <a
+                                    href="#user"
+                                    class="group inline-flex cursor-pointer items-center"
+                                >
+                                    <img
+                                        src="/assets/avatar.PNG"
+                                        alt="avatar"
+                                        class="h-6 w-6 rounded-full object-cover"
+                                    />
+                                    <p
+                                        class="group-hover ml-2 text-sm font-semibold text-primary group-hover:text-primary-hover"
+                                    >
+                                        Minh Chau
+                                    </p>
+                                </a>
+                                <!--todo: public user  -->
+                                <!-- <div class="inline-flex cursor-pointer items-center">
+                                    <img
+                                        src="/assets/avatar.PNG"
+                                        alt="avatar"
+                                        class="h-6 w-6 rounded-full object-cover"
+                                    />
+                                    <p class="ml-2 text-sm font-semibold text-white/70">
+                                        Cộng đồng
+                                    </p>
+                                </div> -->
+                                <a
+                                    href="#photo"
+                                    class="hover:text-white/8 cursor-pointer pt-1 pb-2 text-sm font-bold text-white hover:text-white/90"
+                                >
+                                    <h3>Rừng cây lá vàng mùa thu</h3>
+                                </a>
+                            </div>
+                            <button class="btn btn-md btn-fill btn-square mb-2 ml-1 text-base">
+                                <i class="fa-solid fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="img-card">
+                    <a
+                        href="#"
+                        class="block aspect-[4/3] cursor-pointer overflow-hidden sm:rounded-lg"
+                    >
+                        <img
+                            src="https://picsum.photos/200/300"
+                            alt="image"
+                            class="h-full w-full object-cover object-center"
+                        />
+                    </a>
+
+                    <!--* Content in screen can not hover  -->
+                    <div class="not-hover flex items-start p-2 sm:pb-0">
+                        <div class="stack flex-1">
+                            <!--* user  -->
+                            <a href="#user" class="group inline-flex cursor-pointer items-center">
+                                <img
+                                    src="/assets/avatar.PNG"
+                                    alt="avatar"
+                                    class="h-6 w-6 rounded-full object-cover"
+                                />
+                                <p
+                                    class="group-hover ml-2 text-sm font-semibold text-primary group-hover:text-primary-hover"
+                                >
+                                    Minh Chau
+                                </p>
+                            </a>
+                            <!--todo: Public user  -->
+                            <!-- <div class="inline-flex cursor-pointer items-center">
+                                <img
+                                    src="/assets/avatar.PNG"
+                                    alt="avatar"
+                                    class="h-6 w-6 rounded-full object-cover"
+                                />
+                                <p class="group-hover ml-2 text-sm font-semibold">Cộng đồng</p>
+                            </div> -->
+
+                            <a href="#photo" class="pt-1 pb-2 text-sm font-bold text-clr-text-dark">
+                                <h3>Rừng cây lá vàng mùa thu</h3>
+                            </a>
+                        </div>
+                        <button class="btn btn-md btn-fill btn-square ml-1 mt-2 text-base">
+                            <i class="fa-solid fa-download"></i>
+                        </button>
+                    </div>
+
+                    <!--* Content in screen can hover  -->
+                    <div
+                        class="overlay stack absolute inset-0 rounded-lg bg-gradient-to-t from-black/80 via-black/20 to-black/0 opacity-0 transition-opacity hover:opacity-100"
+                    >
+                        <a href="#photo" class="flex-1"></a>
+                        <div class="flex items-end px-2 pt-2">
+                            <div class="stack flex-1">
+                                <!--* User -->
+                                <a
+                                    href="#user"
+                                    class="group inline-flex cursor-pointer items-center"
+                                >
+                                    <img
+                                        src="/assets/avatar.PNG"
+                                        alt="avatar"
+                                        class="h-6 w-6 rounded-full object-cover"
+                                    />
+                                    <p
+                                        class="group-hover ml-2 text-sm font-semibold text-primary group-hover:text-primary-hover"
+                                    >
+                                        Minh Chau
+                                    </p>
+                                </a>
+                                <!--todo: public user  -->
+                                <!-- <div class="inline-flex cursor-pointer items-center">
+                                    <img
+                                        src="/assets/avatar.PNG"
+                                        alt="avatar"
+                                        class="h-6 w-6 rounded-full object-cover"
+                                    />
+                                    <p class="ml-2 text-sm font-semibold text-white/70">
+                                        Cộng đồng
+                                    </p>
+                                </div> -->
+                                <a
+                                    href="#photo"
+                                    class="hover:text-white/8 cursor-pointer pt-1 pb-2 text-sm font-bold text-white hover:text-white/90"
+                                >
+                                    <h3>Rừng cây lá vàng mùa thu</h3>
+                                </a>
+                            </div>
+                            <button class="btn btn-md btn-fill btn-square mb-2 ml-1 text-base">
+                                <i class="fa-solid fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="img-card">
+                    <a
+                        href="#"
+                        class="block aspect-[4/3] cursor-pointer overflow-hidden sm:rounded-lg"
+                    >
+                        <img
+                            src="https://picsum.photos/200/300"
+                            alt="image"
+                            class="h-full w-full object-cover object-center"
+                        />
+                    </a>
+
+                    <!--* Content in screen can not hover  -->
+                    <div class="not-hover flex items-start p-2 sm:pb-0">
+                        <div class="stack flex-1">
+                            <!--* user  -->
+                            <a href="#user" class="group inline-flex cursor-pointer items-center">
+                                <img
+                                    src="/assets/avatar.PNG"
+                                    alt="avatar"
+                                    class="h-6 w-6 rounded-full object-cover"
+                                />
+                                <p
+                                    class="group-hover ml-2 text-sm font-semibold text-primary group-hover:text-primary-hover"
+                                >
+                                    Minh Chau
+                                </p>
+                            </a>
+                            <!--todo: Public user  -->
+                            <!-- <div class="inline-flex cursor-pointer items-center">
+                                <img
+                                    src="/assets/avatar.PNG"
+                                    alt="avatar"
+                                    class="h-6 w-6 rounded-full object-cover"
+                                />
+                                <p class="group-hover ml-2 text-sm font-semibold">Cộng đồng</p>
+                            </div> -->
+
+                            <a href="#photo" class="pt-1 pb-2 text-sm font-bold text-clr-text-dark">
+                                <h3>Rừng cây lá vàng mùa thu</h3>
+                            </a>
+                        </div>
+                        <button class="btn btn-md btn-fill btn-square ml-1 mt-2 text-base">
+                            <i class="fa-solid fa-download"></i>
+                        </button>
+                    </div>
+
+                    <!--* Content in screen can hover  -->
+                    <div
+                        class="overlay stack absolute inset-0 rounded-lg bg-gradient-to-t from-black/80 via-black/20 to-black/0 opacity-0 transition-opacity hover:opacity-100"
+                    >
+                        <a href="#photo" class="flex-1"></a>
+                        <div class="flex items-end px-2 pt-2">
+                            <div class="stack flex-1">
+                                <!--* User -->
+                                <a
+                                    href="#user"
+                                    class="group inline-flex cursor-pointer items-center"
+                                >
+                                    <img
+                                        src="/assets/avatar.PNG"
+                                        alt="avatar"
+                                        class="h-6 w-6 rounded-full object-cover"
+                                    />
+                                    <p
+                                        class="group-hover ml-2 text-sm font-semibold text-primary group-hover:text-primary-hover"
+                                    >
+                                        Minh Chau
+                                    </p>
+                                </a>
+                                <!--todo: public user  -->
+                                <!-- <div class="inline-flex cursor-pointer items-center">
+                                    <img
+                                        src="/assets/avatar.PNG"
+                                        alt="avatar"
+                                        class="h-6 w-6 rounded-full object-cover"
+                                    />
+                                    <p class="ml-2 text-sm font-semibold text-white/70">
+                                        Cộng đồng
+                                    </p>
+                                </div> -->
+                                <a
+                                    href="#photo"
+                                    class="hover:text-white/8 cursor-pointer pt-1 pb-2 text-sm font-bold text-white hover:text-white/90"
+                                >
+                                    <h3>Rừng cây lá vàng mùa thu</h3>
+                                </a>
+                            </div>
+                            <button class="btn btn-md btn-fill btn-square mb-2 ml-1 text-base">
+                                <i class="fa-solid fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="img-card">
+                    <a
+                        href="#"
+                        class="block aspect-[4/3] cursor-pointer overflow-hidden sm:rounded-lg"
+                    >
+                        <img
+                            src="https://picsum.photos/200/300"
+                            alt="image"
+                            class="h-full w-full object-cover object-center"
+                        />
+                    </a>
+
+                    <!--* Content in screen can not hover  -->
+                    <div class="not-hover flex items-start p-2 sm:pb-0">
+                        <div class="stack flex-1">
+                            <!--* user  -->
+                            <a href="#user" class="group inline-flex cursor-pointer items-center">
+                                <img
+                                    src="/assets/avatar.PNG"
+                                    alt="avatar"
+                                    class="h-6 w-6 rounded-full object-cover"
+                                />
+                                <p
+                                    class="group-hover ml-2 text-sm font-semibold text-primary group-hover:text-primary-hover"
+                                >
+                                    Minh Chau
+                                </p>
+                            </a>
+                            <!--todo: Public user  -->
+                            <!-- <div class="inline-flex cursor-pointer items-center">
+                                <img
+                                    src="/assets/avatar.PNG"
+                                    alt="avatar"
+                                    class="h-6 w-6 rounded-full object-cover"
+                                />
+                                <p class="group-hover ml-2 text-sm font-semibold">Cộng đồng</p>
+                            </div> -->
+
+                            <a href="#photo" class="pt-1 pb-2 text-sm font-bold text-clr-text-dark">
+                                <h3>Rừng cây lá vàng mùa thu</h3>
+                            </a>
+                        </div>
+                        <button class="btn btn-md btn-fill btn-square ml-1 mt-2 text-base">
+                            <i class="fa-solid fa-download"></i>
+                        </button>
+                    </div>
+
+                    <!--* Content in screen can hover  -->
+                    <div
+                        class="overlay stack absolute inset-0 rounded-lg bg-gradient-to-t from-black/80 via-black/20 to-black/0 opacity-0 transition-opacity hover:opacity-100"
+                    >
+                        <a href="#photo" class="flex-1"></a>
+                        <div class="flex items-end px-2 pt-2">
+                            <div class="stack flex-1">
+                                <!--* User -->
+                                <a
+                                    href="#user"
+                                    class="group inline-flex cursor-pointer items-center"
+                                >
+                                    <img
+                                        src="/assets/avatar.PNG"
+                                        alt="avatar"
+                                        class="h-6 w-6 rounded-full object-cover"
+                                    />
+                                    <p
+                                        class="group-hover ml-2 text-sm font-semibold text-primary group-hover:text-primary-hover"
+                                    >
+                                        Minh Chau
+                                    </p>
+                                </a>
+                                <!--todo: public user  -->
+                                <!-- <div class="inline-flex cursor-pointer items-center">
+                                    <img
+                                        src="/assets/avatar.PNG"
+                                        alt="avatar"
+                                        class="h-6 w-6 rounded-full object-cover"
+                                    />
+                                    <p class="ml-2 text-sm font-semibold text-white/70">
+                                        Cộng đồng
+                                    </p>
+                                </div> -->
+                                <a
+                                    href="#photo"
+                                    class="hover:text-white/8 cursor-pointer pt-1 pb-2 text-sm font-bold text-white hover:text-white/90"
+                                >
+                                    <h3>Rừng cây lá vàng mùa thu</h3>
+                                </a>
+                            </div>
+                            <button class="btn btn-md btn-fill btn-square mb-2 ml-1 text-base">
+                                <i class="fa-solid fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="img-card">
+                    <a
+                        href="#"
+                        class="block aspect-[4/3] cursor-pointer overflow-hidden sm:rounded-lg"
+                    >
+                        <img
+                            src="https://picsum.photos/200/300"
+                            alt="image"
+                            class="h-full w-full object-cover object-center"
+                        />
+                    </a>
+
+                    <!--* Content in screen can not hover  -->
+                    <div class="not-hover flex items-start p-2 sm:pb-0">
+                        <div class="stack flex-1">
+                            <!--* user  -->
+                            <a href="#user" class="group inline-flex cursor-pointer items-center">
+                                <img
+                                    src="/assets/avatar.PNG"
+                                    alt="avatar"
+                                    class="h-6 w-6 rounded-full object-cover"
+                                />
+                                <p
+                                    class="group-hover ml-2 text-sm font-semibold text-primary group-hover:text-primary-hover"
+                                >
+                                    Minh Chau
+                                </p>
+                            </a>
+                            <!--todo: Public user  -->
+                            <!-- <div class="inline-flex cursor-pointer items-center">
+                                <img
+                                    src="/assets/avatar.PNG"
+                                    alt="avatar"
+                                    class="h-6 w-6 rounded-full object-cover"
+                                />
+                                <p class="group-hover ml-2 text-sm font-semibold">Cộng đồng</p>
+                            </div> -->
+
+                            <a href="#photo" class="pt-1 pb-2 text-sm font-bold text-clr-text-dark">
+                                <h3>Rừng cây lá vàng mùa thu</h3>
+                            </a>
+                        </div>
+                        <button class="btn btn-md btn-fill btn-square ml-1 mt-2 text-base">
+                            <i class="fa-solid fa-download"></i>
+                        </button>
+                    </div>
+
+                    <!--* Content in screen can hover  -->
+                    <div
+                        class="overlay stack absolute inset-0 rounded-lg bg-gradient-to-t from-black/80 via-black/20 to-black/0 opacity-0 transition-opacity hover:opacity-100"
+                    >
+                        <a href="#photo" class="flex-1"></a>
+                        <div class="flex items-end px-2 pt-2">
+                            <div class="stack flex-1">
+                                <!--* User -->
+                                <a
+                                    href="#user"
+                                    class="group inline-flex cursor-pointer items-center"
+                                >
+                                    <img
+                                        src="/assets/avatar.PNG"
+                                        alt="avatar"
+                                        class="h-6 w-6 rounded-full object-cover"
+                                    />
+                                    <p
+                                        class="group-hover ml-2 text-sm font-semibold text-primary group-hover:text-primary-hover"
+                                    >
+                                        Minh Chau
+                                    </p>
+                                </a>
+                                <!--todo: public user  -->
+                                <!-- <div class="inline-flex cursor-pointer items-center">
+                                    <img
+                                        src="/assets/avatar.PNG"
+                                        alt="avatar"
+                                        class="h-6 w-6 rounded-full object-cover"
+                                    />
+                                    <p class="ml-2 text-sm font-semibold text-white/70">
+                                        Cộng đồng
+                                    </p>
+                                </div> -->
+                                <a
+                                    href="#photo"
+                                    class="hover:text-white/8 cursor-pointer pt-1 pb-2 text-sm font-bold text-white hover:text-white/90"
+                                >
+                                    <h3>Rừng cây lá vàng mùa thu</h3>
+                                </a>
+                            </div>
+                            <button class="btn btn-md btn-fill btn-square mb-2 ml-1 text-base">
+                                <i class="fa-solid fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="img-card">
+                    <a
+                        href="#"
+                        class="block aspect-[4/3] cursor-pointer overflow-hidden sm:rounded-lg"
+                    >
+                        <img
+                            src="https://picsum.photos/200/300"
+                            alt="image"
+                            class="h-full w-full object-cover object-center"
+                        />
+                    </a>
+
+                    <!--* Content in screen can not hover  -->
+                    <div class="not-hover flex items-start p-2 sm:pb-0">
+                        <div class="stack flex-1">
+                            <!--* user  -->
+                            <a href="#user" class="group inline-flex cursor-pointer items-center">
+                                <img
+                                    src="/assets/avatar.PNG"
+                                    alt="avatar"
+                                    class="h-6 w-6 rounded-full object-cover"
+                                />
+                                <p
+                                    class="group-hover ml-2 text-sm font-semibold text-primary group-hover:text-primary-hover"
+                                >
+                                    Minh Chau
+                                </p>
+                            </a>
+                            <!--todo: Public user  -->
+                            <!-- <div class="inline-flex cursor-pointer items-center">
+                                <img
+                                    src="/assets/avatar.PNG"
+                                    alt="avatar"
+                                    class="h-6 w-6 rounded-full object-cover"
+                                />
+                                <p class="group-hover ml-2 text-sm font-semibold">Cộng đồng</p>
+                            </div> -->
+
+                            <a href="#photo" class="pt-1 pb-2 text-sm font-bold text-clr-text-dark">
+                                <h3>Rừng cây lá vàng mùa thu</h3>
+                            </a>
+                        </div>
+                        <button class="btn btn-md btn-fill btn-square ml-1 mt-2 text-base">
+                            <i class="fa-solid fa-download"></i>
+                        </button>
+                    </div>
+
+                    <!--* Content in screen can hover  -->
+                    <div
+                        class="overlay stack absolute inset-0 rounded-lg bg-gradient-to-t from-black/80 via-black/20 to-black/0 opacity-0 transition-opacity hover:opacity-100"
+                    >
+                        <a href="#photo" class="flex-1"></a>
+                        <div class="flex items-end px-2 pt-2">
+                            <div class="stack flex-1">
+                                <!--* User -->
+                                <a
+                                    href="#user"
+                                    class="group inline-flex cursor-pointer items-center"
+                                >
+                                    <img
+                                        src="/assets/avatar.PNG"
+                                        alt="avatar"
+                                        class="h-6 w-6 rounded-full object-cover"
+                                    />
+                                    <p
+                                        class="group-hover ml-2 text-sm font-semibold text-primary group-hover:text-primary-hover"
+                                    >
+                                        Minh Chau
+                                    </p>
+                                </a>
+                                <!--todo: public user  -->
+                                <!-- <div class="inline-flex cursor-pointer items-center">
+                                    <img
+                                        src="/assets/avatar.PNG"
+                                        alt="avatar"
+                                        class="h-6 w-6 rounded-full object-cover"
+                                    />
+                                    <p class="ml-2 text-sm font-semibold text-white/70">
+                                        Cộng đồng
+                                    </p>
+                                </div> -->
+                                <a
+                                    href="#photo"
+                                    class="hover:text-white/8 cursor-pointer pt-1 pb-2 text-sm font-bold text-white hover:text-white/90"
+                                >
+                                    <h3>Rừng cây lá vàng mùa thu</h3>
+                                </a>
+                            </div>
+                            <button class="btn btn-md btn-fill btn-square mb-2 ml-1 text-base">
+                                <i class="fa-solid fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            const menu = document.getElementById('menu-mobile');
+            const menuOverlay = document.getElementById('menu-moblie-overlay');
+            const menuOpenBtn = document.getElementById('menu-open-btn');
+            const smMenuOpenBtn = document.getElementById('sm-menu-open-btn');
+            const menuCloseBtn = document.getElementById('menu-close-btn');
+            const openMenu = () => {
+                menu?.classList.add('open');
+            };
+            const closeMenu = () => {
+                menu?.classList.remove('open');
+            };
+
+            menuOpenBtn?.addEventListener('click', openMenu);
+            smMenuOpenBtn?.addEventListener('click', openMenu);
+            menuOverlay?.addEventListener('click', closeMenu);
+            menuCloseBtn?.addEventListener('click', closeMenu);
+        </script>
+    </body>
+</html>

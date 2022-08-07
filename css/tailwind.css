@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --clr-primary-h: 337deg;
+        --clr-primary-s: 79%;
+        --clr-primary-l: 61%;
+        --clr-primary-hover-l: 54%;
+        --clr-primary: var(--clr-primary-h) var(--clr-primary-s) var(--clr-primary-l);
+        --clr-text: 0deg 0% 47%;
+        --clr-text-dark: 0deg 0% 15%;
+        --clr-light-gray: 0deg 0% 78%;
+        --clr-white: 337deg 0% 100%;
+        --h-header: 56px;
+    }
+    @screen md {
+        :root {
+            --h-header: 60px;
+        }
+    }
+    body {
+        font-family: 'Open Sans', sans-serif, ui-sans-serif, system-ui, -apple-system,
+            BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+            'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+        color: hsl(var(--clr-text));
+        overflow-x: hidden;
+    }
+
+    p {
+        color: hsl(var(--clr-text));
+    }
+
+    .p-body {
+        @apply px-3 sm:px-5 md:px-7 lg:px-11;
+    }
+}
+
+@layer components {
+    .btn {
+        @apply inline-flex cursor-pointer items-center justify-center text-sm transition-colors disabled:pointer-events-none disabled:opacity-50;
+    }
+    .btn-sm {
+        @apply h-[30px] min-w-[84px] rounded-[6px] px-5 font-semibold;
+    }
+    .btn-md {
+        @apply h-[38px] min-w-[100px] rounded-lg px-6 font-bold;
+    }
+    .btn-lg {
+        @apply h-[42px] min-w-[120px] rounded-lg px-7 font-bold;
+    }
+    .btn-sm.btn-square {
+        @apply min-w-[30px] max-w-[30px] p-0;
+    }
+    .btn-md.btn-square {
+        @apply min-w-[38px] max-w-[38px] p-0;
+    }
+    .btn-lg.btn-square {
+        @apply min-w-[42px] max-w-[42px] p-0;
+    }
+    .btn-fill {
+        @apply bg-primary text-white hover:bg-primary-hover;
+    }
+    .btn-outline {
+        @apply border border-primary text-primary hover:bg-primary hover:bg-opacity-[0.12];
+    }
+    .btn-text {
+        @apply text-primary hover:bg-primary hover:bg-opacity-[0.12];
+    }
+
+    .nav-item {
+        @apply block border-b-2 border-transparent py-1 text-sm font-medium uppercase text-clr-text-dark transition-colors;
+    }
+    @media (hover: hover) {
+        .nav-item {
+            @apply group-hover:border-clr-text group-hover:text-clr-text-dark;
+        }
+    }
+    .nav-item.nav-active {
+        @apply border-primary text-primary group-hover:border-primary group-hover:text-primary;
+    }
+
+    .menu-mobile {
+        @apply fixed inset-0 transition-all duration-300 md:hidden;
+        @apply invisible opacity-0 [&.open]:visible [&.open]:opacity-100;
+        @apply [&_.overlay]:opacity-0 [&.open_.overlay]:opacity-100;
+        @apply [&_.menu-content]:translate-x-[200%] sm:[&_.menu-content]:translate-x-[-200%] [&.open_.menu-content]:-translate-x-0;
+    }
+
+    .img-grid {
+        @apply grid w-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+        @apply sm:max-w-[50rem] md:max-w-[75rem] lg:max-w-[92rem];
+        @apply gap-3 sm:gap-5 md:gap-7;
+    }
+
+    .img-card {
+        @apply relative [&_.overlay]:invisible;
+    }
+    @media (hover: hover) {
+        .img-card {
+            @apply [&_.overlay]:visible [&_.not-hover]:hidden;
+        }
+    }
+}
+
+@layer utilities {
+    .test-shadow {
+        box-shadow: 0 0 1px 1px red;
+    }
+
+    /** FLEX */
+    .stack {
+        @apply flex flex-col;
+    }
+}
