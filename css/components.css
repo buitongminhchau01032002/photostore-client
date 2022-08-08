@@ -68,6 +68,15 @@
     .text-input {
         @apply h-[2.375rem] w-full rounded-lg border border-light-gray px-3 caret-primary focus:border-primary;
     }
+    .text-input.invalid {
+        @apply border-red-600;
+    }
+    .input-message {
+        @apply invisible text-sm text-red-600 opacity-0;
+    }
+    .text-input.invalid + .input-message {
+        @apply visible opacity-100;
+    }
 
     /** RADIO  */
     .radio-circle {

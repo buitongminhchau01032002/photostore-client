@@ -160,36 +160,49 @@
         <section class="flex justify-center">
             <div class="md:p-body container-grid md:grid-cols-2">
                 <div class="p-body stack items-center md:px-0">
-                    <div class="tab-create-photo sm:self-start">
-                        <button class="tab-item active">
+                    <div id="tab-type-photo" class="tab-create-photo sm:self-start">
+                        <button value="url" class="tab-item">
                             <i class="fa-solid fa-link icon"></i>
                             <span>URL</span>
                         </button>
-                        <button class="tab-item">
+                        <button value="file" class="tab-item">
                             <i class="fa-solid fa-file-arrow-up icon"></i>
                             <span>Chọn file</span>
                         </button>
                     </div>
 
                     <!--* URL  -->
-                    <input
-                        class="text-input mt-6 md:mt-2"
-                        type="text"
-                        placeholder="https//example.com/photo/1234"
-                    />
+                    <div class="-img-input-group url stack w-full items-center">
+                        <div class="stack relative mt-6 w-full md:mt-2">
+                            <input
+                                id="url-input"
+                                class="text-input"
+                                type="text"
+                                placeholder="https//example.com/photo/1234"
+                            />
+                            <div class="input-message w-full">Ảnh không hợp lệ</div>
+                            <div
+                                id="url-input-loader"
+                                class="absolute right-2 top-2 animate-spin text-primary opacity-0"
+                            >
+                                <i class="fa-solid fa-spinner"></i>
+                            </div>
+                        </div>
+                        <div
+                            class="mt-4 flex w-full justify-center rounded-lg md:mt-6 md:bg-light-gray"
+                        >
+                            <img
+                                id="url-review"
+                                class="block max-h-[27rem] rounded-lg sm:max-h-[30rem]"
+                                src="https://picsum.photos/400/300"
+                                alt="Photo"
+                            />
+                        </div>
+                    </div>
 
                     <!--* FILE  -->
                     <!--todo: File  -->
-
-                    <div
-                        class="mt-4 flex w-full justify-center rounded-lg md:mt-6 md:bg-light-gray"
-                    >
-                        <img
-                            class="block max-h-[27rem] rounded-lg sm:max-h-[30rem]"
-                            src="https://picsum.photos/400/300"
-                            alt="Photo"
-                        />
-                    </div>
+                    <div class="-img-input-group file">File</div>
                 </div>
 
                 <div class="p-body mt-8 md:mt-2 md:px-0">
