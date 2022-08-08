@@ -64,7 +64,8 @@ const initUI = () => {
             elem.classList.remove('!hidden');
         }
     });
-    urlReview.src = '../assets/placeholder.png';
+    urlReview.src =
+        'https://res.cloudinary.com/dbxfq9usa/image/upload/v1659961165/placeholder_qeff7x.png';
 };
 initUI();
 
