@@ -103,7 +103,8 @@ const handleChangeUrl = (e) => {
             urlReview.src = e.target.value;
             urlInput.classList.remove('invalid');
         } else {
-            urlReview.src = '../assets/placeholder.png';
+            urlReview.src =
+                'https://res.cloudinary.com/dbxfq9usa/image/upload/v1659961165/placeholder_qeff7x.png';
             urlInput.classList.add('invalid');
         }
         loader.classList.remove('opacity-100');
