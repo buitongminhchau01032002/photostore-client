@@ -1,4 +1,9 @@
 @layer components {
+    /** HEADER */
+    .fixed-header {
+        @apply fixed inset-0 shadow-sm shadow-gray-300;
+    }
+
     /** NAV + MENU */
     .nav-item {
         @apply block border-b-2 border-transparent py-1 text-sm font-medium uppercase text-clr-text-dark transition-colors;

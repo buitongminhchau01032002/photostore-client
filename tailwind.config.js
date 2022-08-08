@@ -1,10 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ['./*.{html,js}', './upload/*.{html,js}', './photo/*.{html,js}'],
+    content: ['./*.{html,js}', './upload/*.{html,js}', './photo/*.{html,js}', './js/*.js'],
     theme: {
         extend: {
             spacing: {
                 'h-header': 'var(--h-header)',
+                'h-wrap-header': 'var(--h-wrap-header)',
             },
 
             colors: {

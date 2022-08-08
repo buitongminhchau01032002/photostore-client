@@ -10,10 +10,17 @@
         --clr-light-gray: 0deg 0% 78%;
         --clr-white: 337deg 0% 100%;
         --h-header: 56px;
+        --h-wrap-header: 56px;
+    }
+    @screen sm {
+        :root {
+            --h-wrap-header: 78px;
+        }
     }
     @screen md {
         :root {
             --h-header: 60px;
+            --h-wrap-header: 84px;
         }
     }
     body {

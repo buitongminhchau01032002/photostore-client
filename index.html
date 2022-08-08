@@ -13,132 +13,142 @@
         />
         <link rel="stylesheet" href="css/tailwind.css" />
         <script src="https://kit.fontawesome.com/0b05c9f6c4.js" crossorigin="anonymous"></script>
+        <script defer src="main.js" type="module"></script>
     </head>
     <body>
-        <header
-            class="p-body fixed inset-0 z-header flex h-h-header items-center justify-between bg-white shadow-sm shadow-gray-300"
-        >
-            <!--* Menu toggle (sm only) -->
-            <div class="hidden flex-1 sm:block md:hidden">
-                <button
-                    id="sm-menu-open-btn"
-                    class="-ml-2 cursor-pointer p-2 text-xl text-clr-text transition-colors hover:text-clr-text-dark"
-                >
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-            </div>
+        <div class="flex h-h-wrap-header items-end">
+            <header
+                id="header"
+                class="p-body z-header flex h-h-header w-full items-center justify-between bg-white"
+            >
+                <!--* Menu toggle (sm only) -->
+                <div class="hidden flex-1 sm:block md:hidden">
+                    <button
+                        id="sm-menu-open-btn"
+                        class="-ml-2 cursor-pointer p-2 text-xl text-clr-text transition-colors hover:text-clr-text-dark"
+                    >
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
 
-            <!--* Logo (all)  -->
-            <div class="flex flex-1 items-center sm:flex-initial md:flex-1">
-                <a href="/" class="inline-block h-8 cursor-pointer sm:h-9">
-                    <img
-                        src="./assets/logo.svg"
-                        alt="Logo"
-                        class="h-full object-contain object-left"
-                    />
-                </a>
-            </div>
-
-            <!--* nav (md) -->
-            <nav class="hidden items-center md:flex">
-                <a href="/" class="group p-2"><span class="nav-item nav-active">Trang chủ</span></a>
-                <a href="/upload/" class="group p-2"><span class="nav-item">Tạo ảnh</span></a>
-                <a href="#" class="group p-2"><span class="nav-item">Giới thiệu</span></a>
-            </nav>
-            <!--* action group (all)  -->
-            <div class="flex items-center justify-end sm:flex-1">
-                <a href="#/login" class="btn btn-md btn-fill">Đăng nhập</a>
-                <!-- <div class="flex cursor-pointer items-center">
-                    <div class="mr-2 hidden text-right sm:block">
-                        <div class="text-sm font-semibold text-clr-text-dark">Minh Châu</div>
-                        <div class="text-xs font-medium text-clr-text">@minhchau</div>
-                    </div>
-                    <div class="h-[38px] w-[38px] rounded-full shadow-sm shadow-gray-500">
+                <!--* Logo (all)  -->
+                <div class="flex flex-1 items-center sm:flex-initial md:flex-1">
+                    <a href="/" class="inline-block h-8 cursor-pointer sm:h-9">
                         <img
-                            src="./assets/avatar.PNG"
-                            alt="avatar"
-                            class="h-full w-full rounded-full object-cover"
+                            src="./assets/logo.svg"
+                            alt="Logo"
+                            class="h-full object-contain object-left"
                         />
-                    </div>
-                </div> -->
-            </div>
+                    </a>
+                </div>
 
-            <!--* Menu open (mobile only) -->
-            <div class="sm:hidden">
-                <button
-                    id="menu-open-btn"
-                    class="-mr-2 ml-2 cursor-pointer p-2 text-xl text-clr-text"
-                >
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-            </div>
-
-            <!--* Menu mobile and tablet (mobile + sm) -->
-            <div id="menu-mobile" class="menu-mobile">
-                <div
-                    id="menu-moblie-overlay"
-                    class="overlay absolute inset-0 hidden bg-black/50 transition-opacity duration-200 sm:block"
-                ></div>
-                <div
-                    class="menu-content p-body stack absolute inset-0 w-full bg-white transition-transform duration-300 ease-linear sm:w-96"
-                >
-                    <div class="flex h-h-header items-center justify-between">
-                        <a href="/" class="inline-block h-8 cursor-pointer sm:h-9">
+                <!--* nav (md) -->
+                <nav class="hidden items-center md:flex">
+                    <a href="/" class="group p-2"
+                        ><span class="nav-item nav-active">Trang chủ</span></a
+                    >
+                    <a href="/upload/" class="group p-2"><span class="nav-item">Tạo ảnh</span></a>
+                    <a href="#" class="group p-2"><span class="nav-item">Giới thiệu</span></a>
+                </nav>
+                <!--* action group (all)  -->
+                <div class="flex items-center justify-end sm:flex-1">
+                    <a href="#/login" class="btn btn-md btn-fill">Đăng nhập</a>
+                    <!-- <div class="flex cursor-pointer items-center">
+                        <div class="mr-2 hidden text-right sm:block">
+                            <div class="text-sm font-semibold text-clr-text-dark">Minh Châu</div>
+                            <div class="text-xs font-medium text-clr-text">@minhchau</div>
+                        </div>
+                        <div class="h-[38px] w-[38px] rounded-full shadow-sm shadow-gray-500">
                             <img
-                                src="./assets/logo.svg"
-                                alt="Logo"
-                                class="h-full object-contain object-left"
+                                src="./assets/avatar.PNG"
+                                alt="avatar"
+                                class="h-full w-full rounded-full object-cover"
                             />
-                        </a>
-                        <button
-                            id="menu-close-btn"
-                            class="-mr-2 cursor-pointer px-2 text-2xl hover:text-clr-text-dark"
-                        >
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
-                    <nav class="stack flex-1 items-center pt-11">
-                        <a href="/" class="group flex w-full justify-center py-2">
-                            <span class="nav-item nav-active">Trang chủ</span>
-                        </a>
-                        <a href="/upload/" class="group flex w-full justify-center py-2">
-                            <span class="nav-item">Tạo ảnh</span>
-                        </a>
-                        <a href="#" class="group flex w-full justify-center py-2">
-                            <span class="nav-item">Giới thiệu</span>
-                        </a>
-                    </nav>
-                    <div class="stack mb-4">
-                        <!-- <a href="#" class="btn btn-fill btn-md w-full"> Đăng nhập </a> -->
-                        <a class="flex cursor-pointer items-center justify-between">
-                            <div class="flex">
-                                <div
-                                    class="h-[38px] w-[38px] rounded-full shadow-sm shadow-gray-500"
-                                >
-                                    <img
-                                        src="./assets/avatar.PNG"
-                                        alt="avatar"
-                                        class="h-full w-full rounded-full object-cover"
-                                    />
-                                </div>
-                                <div class="stack ml-2 justify-center">
-                                    <div class="text-sm font-semibold text-clr-text-dark">
-                                        Minh Châu
-                                    </div>
-                                    <div class="text-xs font-medium text-clr-text">@minhchau</div>
-                                </div>
-                            </div>
-                            <button class="-mr-2 cursor-pointer px-2 text-xl hover:text-primary">
-                                <i class="fa-solid fa-right-from-bracket"></i>
+                        </div>
+                    </div> -->
+                </div>
+
+                <!--* Menu open (mobile only) -->
+                <div class="sm:hidden">
+                    <button
+                        id="menu-open-btn"
+                        class="-mr-2 ml-2 cursor-pointer p-2 text-xl text-clr-text"
+                    >
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+
+                <!--* Menu mobile and tablet (mobile + sm) -->
+                <div id="menu-mobile" class="menu-mobile">
+                    <div
+                        id="menu-moblie-overlay"
+                        class="overlay absolute inset-0 hidden bg-black/50 transition-opacity duration-200 sm:block"
+                    ></div>
+                    <div
+                        class="menu-content p-body stack absolute inset-0 w-full bg-white transition-transform duration-300 ease-linear sm:w-96"
+                    >
+                        <div class="flex h-h-header items-center justify-between">
+                            <a href="/" class="inline-block h-8 cursor-pointer sm:h-9">
+                                <img
+                                    src="./assets/logo.svg"
+                                    alt="Logo"
+                                    class="h-full object-contain object-left"
+                                />
+                            </a>
+                            <button
+                                id="menu-close-btn"
+                                class="-mr-2 cursor-pointer px-2 text-2xl hover:text-clr-text-dark"
+                            >
+                                <i class="fa-solid fa-xmark"></i>
                             </button>
-                        </a>
+                        </div>
+                        <nav class="stack flex-1 items-center pt-11">
+                            <a href="/" class="group flex w-full justify-center py-2">
+                                <span class="nav-item nav-active">Trang chủ</span>
+                            </a>
+                            <a href="/upload/" class="group flex w-full justify-center py-2">
+                                <span class="nav-item">Tạo ảnh</span>
+                            </a>
+                            <a href="#" class="group flex w-full justify-center py-2">
+                                <span class="nav-item">Giới thiệu</span>
+                            </a>
+                        </nav>
+                        <div class="stack mb-4">
+                            <!-- <a href="#" class="btn btn-fill btn-md w-full"> Đăng nhập </a> -->
+                            <a class="flex cursor-pointer items-center justify-between">
+                                <div class="flex">
+                                    <div
+                                        class="h-[38px] w-[38px] rounded-full shadow-sm shadow-gray-500"
+                                    >
+                                        <img
+                                            src="./assets/avatar.PNG"
+                                            alt="avatar"
+                                            class="h-full w-full rounded-full object-cover"
+                                        />
+                                    </div>
+                                    <div class="stack ml-2 justify-center">
+                                        <div class="text-sm font-semibold text-clr-text-dark">
+                                            Minh Châu
+                                        </div>
+                                        <div class="text-xs font-medium text-clr-text">
+                                            @minhchau
+                                        </div>
+                                    </div>
+                                </div>
+                                <button
+                                    class="-mr-2 cursor-pointer px-2 text-xl hover:text-primary"
+                                >
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                </button>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </header>
+            </header>
+        </div>
 
         <!--* BANNER  -->
-        <section class="p-body mt-h-header py-12 sm:py-14 md:py-16">
+        <section class="p-body py-12 sm:py-14 md:py-16">
             <div class="mb-6 hidden h-9 justify-center md:flex">
                 <img
                     src="/assets/logo.svg"
@@ -753,24 +763,5 @@
         </section>
 
         <footer class="h-48"></footer>
-
-        <script>
-            const menu = document.getElementById('menu-mobile');
-            const menuOverlay = document.getElementById('menu-moblie-overlay');
-            const menuOpenBtn = document.getElementById('menu-open-btn');
-            const smMenuOpenBtn = document.getElementById('sm-menu-open-btn');
-            const menuCloseBtn = document.getElementById('menu-close-btn');
-            const openMenu = () => {
-                menu?.classList.add('open');
-            };
-            const closeMenu = () => {
-                menu?.classList.remove('open');
-            };
-
-            menuOpenBtn?.addEventListener('click', openMenu);
-            smMenuOpenBtn?.addEventListener('click', openMenu);
-            menuOverlay?.addEventListener('click', closeMenu);
-            menuCloseBtn?.addEventListener('click', closeMenu);
-        </script>
     </body>
 </html>
