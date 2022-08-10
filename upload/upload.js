@@ -1,5 +1,6 @@
 import handleHeader from '../js/header';
 import handleMenu from '../js/menu';
+import placeholderImg from '../public/assets/placeholder.png';
 
 handleMenu();
 handleHeader();
@@ -64,8 +65,7 @@ const initUI = () => {
             elem.classList.remove('!hidden');
         }
     });
-    urlReview.src =
-        'https://res.cloudinary.com/dbxfq9usa/image/upload/v1659961165/placeholder_qeff7x.png';
+    urlReview.src = placeholderImg;
 };
 initUI();
 
@@ -104,8 +104,7 @@ const handleChangeUrl = (e) => {
             urlReview.src = e.target.value;
             urlInput.classList.remove('invalid');
         } else {
-            urlReview.src =
-                'https://res.cloudinary.com/dbxfq9usa/image/upload/v1659961165/placeholder_qeff7x.png';
+            urlReview.src = placeholderImg;
             urlInput.classList.add('invalid');
         }
         loader.classList.remove('opacity-100');

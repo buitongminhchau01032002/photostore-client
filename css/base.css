@@ -30,15 +30,20 @@
         color: hsl(var(--clr-text));
         overflow-x: hidden;
     }
-
     p {
         color: hsl(var(--clr-text));
     }
-
     .p-body {
         @apply px-3 sm:px-5 md:px-7 lg:px-11;
     }
-
+    ::-moz-selection {
+        color: white;
+        background: hsl(var(--clr-primary));
+    }
+    ::selection {
+        color: white;
+        background: hsl(var(--clr-primary));
+    }
     input {
         outline: none;
     }
