@@ -18,7 +18,7 @@ const handleHeader = () => {
     };
 
     handleChangeHeader();
-    window.addEventListener('scroll', handleHeader);
+    window.addEventListener('scroll', handleChangeHeader);
 };
 
 export default handleHeader;

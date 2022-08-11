@@ -1,11 +1,11 @@
-import placeholder from '../public/assets/placeholder.png';
+import placeholder from '../assets/placeholder.png';
 
-const placeholderImages = () => {
+const placeholderImages = (selector) => {
     const imgs = document.querySelectorAll('img');
     imgs.forEach((img) => {
-        img.addEventListener('error', () => {
-            img.src = placeholder;
-        });
+        const handleError = () => (img.src = placeholder);
+        img.removeEventListener('error', handleError);
+        img.addEventListener('error', handleError);
     });
 };
 

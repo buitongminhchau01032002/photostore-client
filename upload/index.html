@@ -35,7 +35,7 @@
                 <div class="flex flex-1 items-center sm:flex-initial md:flex-1">
                     <a href="/" class="inline-block h-8 cursor-pointer sm:h-9">
                         <img
-                            src="/public/assets/logo.svg"
+                            src="/assets/logo.svg"
                             alt="Logo"
                             class="h-full object-contain object-left"
                         />
@@ -62,7 +62,7 @@
                         </div>
                         <div class="h-[38px] w-[38px] rounded-full shadow-sm shadow-gray-500">
                             <img
-                                src="/public/assets/avatar.PNG"
+                                src="/assets/avatar.PNG"
                                 alt="avatar"
                                 class="h-full w-full rounded-full object-cover"
                             />
@@ -92,7 +92,7 @@
                         <div class="flex h-h-header items-center justify-between">
                             <a href="/" class="inline-block h-8 cursor-pointer sm:h-9">
                                 <img
-                                    src="/public/assets/logo.svg"
+                                    src="/assets/logo.svg"
                                     alt="Logo"
                                     class="h-full object-contain object-left"
                                 />
@@ -123,7 +123,7 @@
                                         class="h-[38px] w-[38px] rounded-full shadow-sm shadow-gray-500"
                                     >
                                         <img
-                                            src="/public/assets/avatar.PNG"
+                                            src="/assets/avatar.PNG"
                                             alt="avatar"
                                             class="h-full w-full rounded-full object-cover"
                                         />
@@ -180,6 +180,7 @@
                                 id="url-input"
                                 class="text-input"
                                 type="text"
+                                value="https://picsum.photos/id/1043/800/600"
                                 placeholder="https//example.com/photo/1234"
                             />
                             <div class="input-message w-full">Ảnh không hợp lệ</div>
@@ -191,12 +192,12 @@
                             </div>
                         </div>
                         <div
-                            class="mt-4 flex w-full justify-center rounded-lg md:mt-6 md:bg-light-gray"
+                            class="mt-1 flex w-full justify-center rounded-lg md:mt-2 md:bg-light-gray"
                         >
                             <img
-                                id="url-review"
+                                id="url-preview"
                                 class="block max-h-[27rem] rounded-lg sm:max-h-[30rem]"
-                                src="/public/assets/placeholder.png"
+                                src="/assets/placeholder.png"
                                 alt="Photo"
                             />
                         </div>
@@ -210,50 +211,58 @@
                 <div class="p-body mt-8 md:mt-2 md:px-0">
                     <div>
                         <div class="mb-2 font-bold text-clr-text-dark">Tiêu đề</div>
-                        <input class="text-input" type="text" placeholder="Mùa thu tại Đà Lạt" />
+                        <input
+                            id="title-input"
+                            class="text-input"
+                            type="text"
+                            placeholder="Mùa thu tại Đà Lạt"
+                        />
+                        <div class="input-message w-full">Tiêu đề không được để trống!</div>
                     </div>
-                    <div class="mt-5">
+                    <div class="mt-1">
                         <div class="mb-2 font-bold text-clr-text-dark">Mô tả</div>
                         <input
+                            id="description-input"
                             class="text-input"
                             type="text"
                             placeholder="Khu rừng lá vàng ở Đà Lạt vào mùa thu"
                         />
+                        <div class="input-message w-full">No error</div>
                     </div>
-                    <div class="mt-5">
+                    <div class="mt-1">
                         <div class="mb-2 font-bold text-clr-text-dark">Ai có thể xem ảnh này</div>
                         <div class="flex">
                             <input
                                 class="input-radio hidden [&:disabled+label]:cursor-default"
                                 type="radio"
-                                id="is-public-photo--public"
-                                name="is-public-photo"
+                                id="audience--public"
+                                name="audience"
                                 value="public"
                                 checked
                             />
-                            <label
-                                for="is-public-photo--public"
-                                class="flex cursor-pointer items-center"
-                            >
+                            <label for="audience--public" class="flex cursor-pointer items-center">
                                 <div class="radio-circle"></div>
                                 <span class="pl-2">Mọi người</span>
                             </label>
                             <input
                                 class="input-radio hidden [&:disabled+label]:cursor-default"
                                 type="radio"
-                                id="is-public-photo--private"
-                                name="is-public-photo"
+                                id="audience--private"
+                                name="audience"
                                 value="private"
                             />
                             <label
-                                for="is-public-photo--private"
+                                for="audience--private"
                                 class="ml-6 flex cursor-pointer items-center"
                             >
                                 <div class="radio-circle"></div>
                                 <span class="pl-2">Chỉ mình tôi</span>
                             </label>
                         </div>
-                        <button class="btn btn-md btn-fill sm:btn-lg mt-8 w-full sm:w-auto">
+                        <button
+                            id="submit-create-photo-btn"
+                            class="btn btn-md btn-fill sm:btn-lg mt-8 w-full sm:w-auto"
+                        >
                             Tạo ảnh
                         </button>
                     </div>
