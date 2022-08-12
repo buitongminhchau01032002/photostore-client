@@ -1,10 +1,12 @@
 import handleHeader from '../js/header';
 import handleMenu from '../js/menu';
 import placeholderImg from '../assets/placeholder.png';
+import createPlaceholderImage from '../js/image';
 import { initToast, createToast } from '../js/toast';
 
 handleMenu();
 handleHeader();
+createPlaceholderImage('img:not(.img-preview)');
 initToast();
 
 const debouceFunc = (func, delay) => {

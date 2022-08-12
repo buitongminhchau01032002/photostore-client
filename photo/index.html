@@ -148,73 +148,29 @@
         </div>
 
         <!--* PHOTO -->
-        <section class="flex justify-center">
-            <div class="md:p-body container-grid sm:mt-4 md:mt-6 md:grid-cols-2">
+        <section id="photo-section" class="flex justify-center">
+            <!--* PLACEHOLDER -->
+            <div class="md:p-body container-grid animate-pulse sm:mt-4 md:mt-6 md:grid-cols-2">
                 <!--* LEFT GROUP -->
-                <div class="sm:p-body flex w-full justify-center md:px-0">
-                    <img
-                        class="max-h-[calc(100vh_-_var(--h-wrap-header))] sm:max-h-[calc(100vh_-_var(--h-wrap-header)_-_16px)] sm:rounded-lg md:max-h-[calc(100vh_-_var(--h-wrap-header)_-_24px)]"
-                        src="https://picsum.photos/800/600"
-                        alt="Photo"
-                    />
+                <div class="sm:p-body md:px-0">
+                    <div class="aspect-[4/3] rounded-lg bg-gray-200"></div>
                 </div>
                 <!--* RIGHT GROUP -->
                 <div class="p-body md:px-0">
-                    <h2 class="mt-2 text-lg font-bold text-clr-text-dark md:mt-0">
-                        Mùa thu tại Đà Lạt
-                    </h2>
-                    <p class="mt-1 mb-4 text-justify text-sm">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus
-                        temporibus cumque dicta magni rerum assumenda quam nesciunt ad atque
-                        suscipit consectetur
-                    </p>
+                    <h2 class="mt-2 h-7 w-5/6 bg-gray-200 md:mt-0"></h2>
+                    <p class="mt-2 h-4 bg-gray-200"></p>
+                    <p class="mt-2 mb-6 h-4 bg-gray-200"></p>
                     <!--* user  -->
-                    <a href="#/user" class="group flex sm:inline-flex">
-                        <div class="h-[34px] w-[34px] rounded-full shadow-sm shadow-gray-500">
-                            <img
-                                src="/assets/avatar.PNG"
-                                alt="avatar"
-                                class="h-full w-full rounded-full object-cover"
-                            />
-                        </div>
-                        <div class="stack ml-2 justify-center">
-                            <div
-                                class="text-sm font-semibold text-primary group-hover:text-primary-hover"
-                            >
-                                Minh Châu
-                            </div>
-                            <div class="text-xs font-medium text-clr-text">@minhchau</div>
-                        </div>
-                    </a>
-                    <!--* public user  -->
-                    <!-- <div href="#/user" class="flex">
-                        <div class="h-[34px] w-[34px] rounded-full shadow-sm shadow-gray-500">
-                            <img
-                                src="/assets/avatar.PNG"
-                                alt="avatar"
-                                class="h-full w-full rounded-full object-cover"
-                            />
-                        </div>
-                        <div class="stack ml-2 justify-center">
-                            <div class="text-sm font-semibold text-clr-text">Cộng đồng</div>
-                        </div>
-                    </div> -->
+                    <div class="inline-flex items-center">
+                        <div class="h-[34px] w-[34px] rounded-full bg-gray-200"></div>
+                        <div class="ml-2 h-7 w-24 bg-slate-200"></div>
+                    </div>
 
                     <div>
                         <div class="mt-7 flex sm:inline-flex">
-                            <button
-                                class="btn btn-md btn-fill sm:btn-lg flex-1 sm:w-52 sm:flex-initial"
-                            >
-                                Tải xuống
-                            </button>
-                            <a class="btn btn-md btn-outline sm:btn-lg btn-square ml-2">
-                                <i class="fa-solid fa-pen"></i>
-                            </a>
-                            <button
-                                class="btn btn-md btn-outline sm:btn-lg btn-square ml-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white"
-                            >
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
+                            <div
+                                class="h-[2.625rem] flex-1 rounded-lg bg-primary/20 sm:w-52 sm:flex-initial"
+                            ></div>
                         </div>
                     </div>
                 </div>
