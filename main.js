@@ -14,17 +14,17 @@ const imgListElem = document.getElementById('img-list');
 
 // Init
 function Init() {
-    //todo: placceholder
     fetch(`${import.meta.env.VITE_API_URL}/photo`)
         .then((res) => res.json())
         .then((data) => {
             if (data.success) {
                 imgListState = data.photos;
-                //todo: remove placeholder
                 renderImgs();
                 createPlaceholderImage('img');
             } else {
-                createToast('error', 'Lỗi', 'Có lỗi xảy ra, vui lòng tải lại trang.', 5000);
+                createToast('error', 'Lỗi', 'Có lỗi xảy ra, vui lòng thử lại.', 5000);
+                const errorHtml = createErrorHtml();
+                imgListElem.innerHTML = errorHtml;
             }
         })
         .catch((e) => {
@@ -35,6 +35,8 @@ function Init() {
                 'Không tải được ảnh, vui lòng kiểm tra kết nối mạng.',
                 5000
             );
+            const errorHtml = createErrorHtml();
+            imgListElem.innerHTML = errorHtml;
         });
 }
 
@@ -152,4 +154,13 @@ function createImgCard(imageData) {
             </div>
         </div>
         `;
+}
+
+function createErrorHtml() {
+    return /*html*/ `
+        <div class="stack items-center pt-11 sm:col-span-2 md:col-span-3 lg:col-span-4">
+            <h2 class="text-primary font-light text-2xl">Ồ, có gì đó không đúng!</h2>
+            <p class="mt-5 max-w-2xl text-center p-body">Không thể hiển thị ảnh. Hãy kiểm tra kết nối và thử lại</p>
+        </div>
+    `;
 }

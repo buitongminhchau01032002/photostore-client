@@ -71,6 +71,8 @@ function init() {
         .catch((e) => {
             console.log(e);
             createToast('error', 'Lỗi', 'Vui lòng kiểm tra kết nối mạng.', 5000);
+            const errorHtml = createErrorHtml();
+            photoSectionElem.innerHTML = errorHtml;
         });
 }
 init();
@@ -168,7 +170,7 @@ function createErrorHtml() {
     return /*html*/ `
         <div class="stack items-center pt-11">
             <h2 class="text-primary font-light text-2xl">Ồ, có gì đó không đúng!</h2>
-            <p class="mt-5 max-w-2xl text-center p-body">Không thể hiển thị ảnh. Có thể do dường dẫn không đúng, ảnh đã bị xoá hoặc bạn không có quyền truy cập ảnh này!</p>
+            <p class="mt-5 max-w-2xl text-center p-body">Không thể hiển thị ảnh. Có thể do kết nối, đường dẫn không đúng, ảnh đã bị xoá hoặc bạn không có quyền truy cập ảnh này!</p>
             <div class="p-body mt-6">
                 <a href="/" class="btn btn-md btn-fill w-full sm:w-auto">Về trang chủ</a>
             </div>
