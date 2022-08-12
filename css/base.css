@@ -11,10 +11,12 @@
         --clr-white: 337deg 0% 100%;
         --h-header: 56px;
         --h-wrap-header: 56px;
+        --h-toast: 3rem;
     }
     @screen sm {
         :root {
             --h-wrap-header: 78px;
+            --h-toast: 4.25rem;
         }
     }
     @screen md {

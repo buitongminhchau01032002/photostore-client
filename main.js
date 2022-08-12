@@ -1,10 +1,12 @@
 import handleMenu from './js/menu';
 import handleHeader from './js/header';
 import createPlaceholderImage from './js/image';
+import { initToast, createToast } from './js/toast';
 
 handleMenu();
 handleHeader();
 createPlaceholderImage('img');
+initToast();
 
 let imgListState = [];
 
@@ -25,7 +27,10 @@ function Init() {
                 alert('Error');
             }
         })
-        .catch((e) => console.log(e));
+        .catch((e) => {
+            console.log(e);
+            createToast('error', 'Lỗi', 'Không tải được ảnh, vui lòng kiểm tra kết nối mạng', 5000);
+        });
 }
 
 Init();

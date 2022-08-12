@@ -6,6 +6,7 @@ module.exports = {
             spacing: {
                 'h-header': 'var(--h-header)',
                 'h-wrap-header': 'var(--h-wrap-header)',
+                'h-toast': 'var(--h-toast)',
             },
 
             colors: {
@@ -24,6 +25,7 @@ module.exports = {
 
             zIndex: {
                 header: 100,
+                toast: 1000,
             },
         },
         screens: {
