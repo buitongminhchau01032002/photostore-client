@@ -24,12 +24,17 @@ function Init() {
                 renderImgs();
                 createPlaceholderImage('img');
             } else {
-                alert('Error');
+                createToast('error', 'Lỗi', 'Có lỗi xảy ra, vui lòng tải lại trang.', 5000);
             }
         })
         .catch((e) => {
             console.log(e);
-            createToast('error', 'Lỗi', 'Không tải được ảnh, vui lòng kiểm tra kết nối mạng', 5000);
+            createToast(
+                'error',
+                'Lỗi',
+                'Không tải được ảnh, vui lòng kiểm tra kết nối mạng.',
+                5000
+            );
         });
 }
 

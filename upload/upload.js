@@ -1,9 +1,11 @@
 import handleHeader from '../js/header';
 import handleMenu from '../js/menu';
 import placeholderImg from '../assets/placeholder.png';
+import { initToast, createToast } from '../js/toast';
 
 handleMenu();
 handleHeader();
+initToast();
 
 const debouceFunc = (func, delay) => {
     let timeoutId = null;
@@ -17,28 +19,48 @@ const debouceFunc = (func, delay) => {
     };
 };
 
-function checkImage(url, callback) {
-    var timeout = 5000;
-    var timedOut = false;
-    var timer;
-    var img = new Image();
-    img.onerror = img.onabort = function () {
-        if (!timedOut) {
+// function checkImage(url, callback) {
+//     var timeout = 5000;
+//     var timedOut = false;
+//     var timer;
+//     var img = new Image();
+//     img.onerror = img.onabort = function () {
+//         if (!timedOut) {
+//             clearTimeout(timer);
+//             callback(false);
+//         }
+//     };
+//     img.onload = function () {
+//         if (!timedOut) {
+//             clearTimeout(timer);
+//             callback(true);
+//         }
+//     };
+//     img.src = url;
+//     timer = setTimeout(function () {
+//         timedOut = true;
+//         callback(false);
+//     }, timeout);
+// }
+
+function checkImage(url, timeoutT) {
+    return new Promise(function (resolve, reject) {
+        var timeout = timeoutT || 5000;
+        var timer,
+            img = new Image();
+        img.onerror = img.onabort = function () {
             clearTimeout(timer);
-            callback(false);
-        }
-    };
-    img.onload = function () {
-        if (!timedOut) {
+            reject('error');
+        };
+        img.onload = function () {
             clearTimeout(timer);
-            callback(true);
-        }
-    };
-    img.src = url;
-    timer = setTimeout(function () {
-        timedOut = true;
-        callback(false);
-    }, timeout);
+            resolve();
+        };
+        img.src = url;
+        timer = setTimeout(function () {
+            reject('timeout');
+        }, timeout);
+    });
 }
 
 // ======================
@@ -74,17 +96,22 @@ const initUI = () => {
     // Load photo preview
     const loader = document.getElementById('url-input-loader');
     loader.classList.add('opacity-100');
-    checkImage(urlInput.value, (isValid) => {
-        if (isValid) {
+    checkImage(urlInput.value, 5000)
+        .then(() => {
             urlPreview.src = urlInput.value;
             urlInput.classList.remove('invalid');
-        } else {
+        })
+        .catch((msg) => {
             urlPreview.src = placeholderImg;
             urlInput.classList.add('invalid');
-        }
-        loader.classList.remove('opacity-100');
-        checkCanSubmit();
-    });
+            if (msg === 'timeout') {
+                createToast('warning', 'Lỗi kiểm tra ảnh', 'Không thể kiểm tra ảnh', 5000);
+            }
+        })
+        .finally(() => {
+            loader.classList.remove('opacity-100');
+            checkCanSubmit();
+        });
 };
 initUI();
 
@@ -137,17 +164,27 @@ tabTypePhotoBtns.forEach((tabTypePhotoBtn) => {
 function handleChangeUrl(e) {
     const loader = document.getElementById('url-input-loader');
     loader.classList.add('opacity-100');
-    checkImage(e.target.value, (isValid) => {
-        if (isValid) {
+    checkImage(e.target.value, 5000)
+        .then(() => {
             urlPreview.src = e.target.value;
             urlInput.classList.remove('invalid');
-        } else {
+        })
+        .catch((msg) => {
             urlPreview.src = placeholderImg;
             urlInput.classList.add('invalid');
-        }
-        loader.classList.remove('opacity-100');
-        checkCanSubmit();
-    });
+            if (msg === 'timeout') {
+                createToast(
+                    'warning',
+                    'Không thể kiểm tra ảnh',
+                    'Vui lòng kiểm tra đường dẫn hoặc kết nối mạng.',
+                    8000
+                );
+            }
+        })
+        .finally(() => {
+            loader.classList.remove('opacity-100');
+            checkCanSubmit();
+        });
 }
 urlInput.addEventListener('input', debouceFunc(handleChangeUrl, 500));
 urlInput.addEventListener('blur', handleChangeUrl);
@@ -176,11 +213,18 @@ titleInput.addEventListener('input', (e) => {
 
 submitBtn.addEventListener('click', () => {
     submitBtn.disabled = true;
+    const loader = submitBtn.querySelector('.loading-submit');
+    if (loader) {
+        loader.classList.remove('hidden');
+    }
     const dataForm = {};
     const check = checkCanSubmit();
     if (!check) {
         console.log('invalid');
         submitBtn.disabled = false;
+        if (loader) {
+            loader.classList.add('hidden');
+        }
         return;
     }
 
@@ -188,6 +232,9 @@ submitBtn.addEventListener('click', () => {
     if (typeChoosePhotoState !== 'url') {
         console.log('canot use file');
         submitBtn.disabled = false;
+        if (loader) {
+            loader.classList.add('hidden');
+        }
         return;
     }
     dataForm.photo = urlInput.value;
@@ -221,15 +268,21 @@ submitBtn.addEventListener('click', () => {
         .then((res) => res.json())
         .then((data) => {
             if (data.success) {
-                //todo: handle success
-                alert('Tạo ảnh thành công');
-                submitBtn.disabled = false;
+                createToast('success', 'Thành công', 'Tạo ảnh thành công.');
                 titleInput.value = '';
                 descriptionInput.value = '';
             } else {
-                //todo: handle error
-                alert('Lỗi');
+                createToast('error', 'Lỗi tạo ảnh', 'Tạo ảnh không thành công.');
             }
         })
-        .catch((e) => console.log(e));
+        .catch((e) => {
+            console.log(e);
+            createToast('error', 'Lỗi', 'Không thể tạo ảnh, vui lòng kiểm tra kết nối mạng.', 5000);
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+            if (loader) {
+                loader.classList.add('hidden');
+            }
+        });
 });

@@ -8,7 +8,7 @@ function initToast() {
     toastContainerElem = document.createElement('div');
     toastContainerElem.id = 'toast-container';
     toastContainerElem.className =
-        'fixed flex flex-col-reverse sm:flex-col left-0 sm:left-auto bottom-0 sm:bottom-unset sm:top-0 right-0 z-toast sm:m-6 sm:[&>div]:mb-2';
+        'fixed flex flex-col-reverse sm:flex-col left-0 sm:left-auto bottom-0 sm:bottom-auto sm:top-0 right-0 z-toast sm:m-6 sm:[&>div]:mb-2';
     document.body.append(toastContainerElem);
 }
 
@@ -49,9 +49,13 @@ function createToast(type = 'success', title = '', description = '', duration = 
         >
             ${iconHtml}
         </div>
-        <div class="hidden sm:stack flex-1 justify-center pl-3">
+        <div class="hidden sm:stack flex-1 justify-center px-3 relative">
             <div class="font-bold text-clr-text-dark">${title}</div>
-            <div class="">${description}</div>
+            <div class="leading-4">${description}</div>
+            <div
+                class="absolute h-0.5 ${colorClass} bottom-0 right-0 left-0 origin-left" 
+                style="animation: timeline-toast ${duration}ms linear forwards"
+            ></div>
         </div>
         <button class="hidden sm:inline-block close-btn absolute right-2 text-lg hover:opacity-60">
             <i class="fa-solid fa-xmark"></i>
