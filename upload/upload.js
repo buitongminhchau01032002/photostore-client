@@ -21,30 +21,6 @@ const debouceFunc = (func, delay) => {
     };
 };
 
-// function checkImage(url, callback) {
-//     var timeout = 5000;
-//     var timedOut = false;
-//     var timer;
-//     var img = new Image();
-//     img.onerror = img.onabort = function () {
-//         if (!timedOut) {
-//             clearTimeout(timer);
-//             callback(false);
-//         }
-//     };
-//     img.onload = function () {
-//         if (!timedOut) {
-//             clearTimeout(timer);
-//             callback(true);
-//         }
-//     };
-//     img.src = url;
-//     timer = setTimeout(function () {
-//         timedOut = true;
-//         callback(false);
-//     }, timeout);
-// }
-
 function checkImage(url, timeoutT) {
     return new Promise(function (resolve, reject) {
         var timeout = timeoutT || 5000;
@@ -65,15 +41,26 @@ function checkImage(url, timeoutT) {
     });
 }
 
+const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+    });
+
 // ======================
 let user = null;
 let typeChoosePhotoState = 'url';
 const tabTypePhoto = document.getElementById('tab-type-photo');
-const tabTypePhotoBtns = tabTypePhoto.querySelectorAll('button[value]');
+const tabTypePhotoBtns = tabTypePhoto.querySelectorAll('#tab-type-photo > button[value]');
 
 const imgInputGroups = document.querySelectorAll('.-img-input-group');
 const urlInput = document.getElementById('url-input');
 const urlPreview = document.getElementById('url-preview');
+
+const fileInput = document.getElementById('file-input');
+const filePreview = document.getElementById('file-preview');
 
 const titleInput = document.getElementById('title-input');
 const descriptionInput = document.getElementById('description-input');
@@ -95,7 +82,7 @@ const initUI = () => {
         }
     });
 
-    // Load photo preview
+    // Load photo preview url
     const loader = document.getElementById('url-input-loader');
     loader.classList.add('opacity-100');
     checkImage(urlInput.value, 5000)
@@ -114,13 +101,19 @@ const initUI = () => {
             loader.classList.remove('opacity-100');
             checkCanSubmit();
         });
+
+    // Load photo preview file
+    filePreview.src = placeholderImg;
 };
 initUI();
 
-const checkCanSubmit = () => {
-    if (typeChoosePhotoState !== 'url') {
-        submitBtn.disabled = true;
-        return false;
+//* CHECK VALID AND DISABLE SUBMIT BTN
+function checkCanSubmit() {
+    if (typeChoosePhotoState === 'file') {
+        if (fileInput.classList.contains('invalid') || fileInput.files.length === 0) {
+            submitBtn.disabled = true;
+            return false;
+        }
     } else {
         if (urlInput.classList.contains('invalid') || urlInput.value == '') {
             submitBtn.disabled = true;
@@ -131,11 +124,18 @@ const checkCanSubmit = () => {
             return false;
         }
     }
+
+    if (titleInput.value === '') {
+        submitBtn.disabled = true;
+        return false;
+    }
+
     submitBtn.disabled = false;
     return true;
-};
+}
 checkCanSubmit();
 
+//* HANDLE TAB
 const handleChangeTypeChoosePhoto = (e) => {
     const target = e.currentTarget;
     if (!target) {
@@ -158,11 +158,11 @@ const handleChangeTypeChoosePhoto = (e) => {
     }
     checkCanSubmit();
 };
-
 tabTypePhotoBtns.forEach((tabTypePhotoBtn) => {
     tabTypePhotoBtn.addEventListener('click', handleChangeTypeChoosePhoto);
 });
 
+//* HANDLE CHANGE URL
 function handleChangeUrl(e) {
     const loader = document.getElementById('url-input-loader');
     loader.classList.add('opacity-100');
@@ -191,13 +191,13 @@ function handleChangeUrl(e) {
 urlInput.addEventListener('input', debouceFunc(handleChangeUrl, 500));
 urlInput.addEventListener('blur', handleChangeUrl);
 
+//* HANDLE ANOTHER INPUT
 titleInput.addEventListener('blur', (e) => {
     if (titleInput.value.length === 0) {
         titleInput.classList.add('invalid');
         titleInput.classList.add('touched');
     }
 });
-
 titleInput.addEventListener('input', (e) => {
     if (titleInput.value.length !== 0) {
         // valid
@@ -213,7 +213,53 @@ titleInput.addEventListener('input', (e) => {
     checkCanSubmit();
 });
 
-submitBtn.addEventListener('click', () => {
+//* HANDLE CHANGE FILE INPUT
+fileInput.addEventListener('change', (e) => {
+    // const loader = document.getElementById('url-input-loader');
+    // loader.classList.add('opacity-100');
+
+    const files = fileInput.files;
+    if (!files.length) {
+        const fileNameElem = document.querySelector('#file-input ~ * .file-name');
+        fileNameElem && (fileNameElem.innerHTML = 'Không có ảnh được chọn');
+        filePreview.src = placeholderImg;
+        fileInput.classList.add('invalid');
+        checkCanSubmit();
+        return;
+    }
+    const blob = URL.createObjectURL(files[0]);
+    let name = files[0].name;
+    if (name.length > 45) {
+        name = name.slice(0, 20) + '...' + name.slice(name.length - 20);
+    }
+    const fileNameElem = document.querySelector('#file-input ~ * .file-name');
+    fileNameElem && (fileNameElem.innerHTML = name);
+
+    checkImage(blob, 5000)
+        .then(() => {
+            filePreview.src = blob;
+            fileInput.classList.remove('invalid');
+        })
+        .catch((msg) => {
+            filePreview.src = placeholderImg;
+            fileInput.classList.add('invalid');
+            if (msg === 'timeout') {
+                createToast(
+                    'warning',
+                    'Không thể kiểm tra ảnh',
+                    'Vui lòng kiểm tra file hoặc kết nối mạng.',
+                    8000
+                );
+            }
+        })
+        .finally(() => {
+            // loader.classList.remove('opacity-100');
+            checkCanSubmit();
+        });
+});
+
+//* HANDLE CLICK SUBMIT
+submitBtn.addEventListener('click', async () => {
     submitBtn.disabled = true;
     const loader = submitBtn.querySelector('.loading-submit');
     if (loader) {
@@ -231,15 +277,31 @@ submitBtn.addEventListener('click', () => {
     }
 
     // Photo
-    if (typeChoosePhotoState !== 'url') {
-        console.log('canot use file');
-        submitBtn.disabled = false;
-        if (loader) {
-            loader.classList.add('hidden');
+    if (typeChoosePhotoState === 'file') {
+        if (!fileInput.files.length === 0) {
+            createToast('error', 'Lỗi ảnh', 'Có lỗi từ file ảnh!', 5000);
+
+            submitBtn.disabled = false;
+            if (loader) {
+                loader.classList.add('hidden');
+            }
+            return;
         }
-        return;
+
+        try {
+            dataForm.photo = await toBase64(fileInput.files[0]);
+        } catch (error) {
+            createToast('error', 'Lỗi ảnh', 'Có lỗi từ file ảnh!', 5000);
+
+            submitBtn.disabled = false;
+            if (loader) {
+                loader.classList.add('hidden');
+            }
+            return;
+        }
+    } else {
+        dataForm.photo = urlInput.value;
     }
-    dataForm.photo = urlInput.value;
 
     // Title
     dataForm.title = titleInput.value;
@@ -258,7 +320,7 @@ submitBtn.addEventListener('click', () => {
 
     // Call api
     submitBtn.disabled = true;
-    console.log(dataForm);
+    console.log(dataForm.photo);
 
     fetch(`${import.meta.env.VITE_API_URL}/photo`, {
         method: 'POST',
@@ -270,16 +332,17 @@ submitBtn.addEventListener('click', () => {
         .then((res) => res.json())
         .then((data) => {
             if (data.success) {
-                createToast('success', 'Thành công', 'Tạo ảnh thành công.');
+                createToast('success', 'Thành công', 'Tạo ảnh thành công.', 5000);
                 titleInput.value = '';
                 descriptionInput.value = '';
             } else {
-                createToast('error', 'Lỗi tạo ảnh', 'Tạo ảnh không thành công.');
+                createToast('error', 'Lỗi tạo ảnh', 'Tạo ảnh không thành công.', 5000);
+                console.log(data);
             }
         })
         .catch((e) => {
             console.log(e);
-            createToast('error', 'Lỗi', 'Không thể tạo ảnh, vui lòng kiểm tra kết nối mạng.', 5000);
+            createToast('error', 'Lỗi', 'Không thể tạo ảnh', 5000);
         })
         .finally(() => {
             submitBtn.disabled = false;

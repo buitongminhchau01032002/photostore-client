@@ -205,7 +205,36 @@
 
                     <!--* FILE  -->
                     <!--todo: File  -->
-                    <div class="-img-input-group file">File</div>
+                    <div class="-img-input-group file stack w-full items-center">
+                        <div class="w-full">
+                            <input
+                                type="file"
+                                class="hidden [&.invalid~.input-message]:visible [&.invalid~.input-message]:opacity-100"
+                                id="file-input"
+                            />
+                            <div id="file-input" class="mt-2 flex items-center">
+                                <label
+                                    for="file-input"
+                                    id="file-input-btn"
+                                    class="btn btn-md btn-fill"
+                                >
+                                    Chọn file
+                                </label>
+                                <div for="file-input" class="file-name ml-2 flex-1"></div>
+                            </div>
+                            <div class="input-message w-full">Ảnh không hợp lệ</div>
+                        </div>
+                        <div
+                            class="mt-1 flex w-full justify-center rounded-lg md:mt-2 md:bg-light-gray"
+                        >
+                            <img
+                                id="file-preview"
+                                class="img-preview block max-h-[27rem] rounded-lg sm:max-h-[30rem]"
+                                src="/assets/placeholder.png"
+                                alt="Photo"
+                            />
+                        </div>
+                    </div>
                 </div>
 
                 <div class="p-body mt-8 md:mt-2 md:px-0">
