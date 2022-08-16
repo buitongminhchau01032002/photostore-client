@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>PhotoStore</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="../css/tailwind.css" />
+        <script src="https://kit.fontawesome.com/0b05c9f6c4.js" crossorigin="anonymous"></script>
+        <script defer src="edit.js" type="module"></script>
+    </head>
+    <body>
+        <div class="flex h-h-wrap-header items-end">
+            <header
+                id="header"
+                class="p-body z-header flex h-h-header w-full items-center justify-between bg-white"
+            >
+                <!--* Menu toggle (sm only) -->
+                <div class="hidden flex-1 sm:block md:hidden">
+                    <button
+                        id="sm-menu-open-btn"
+                        class="-ml-2 cursor-pointer p-2 text-xl text-clr-text transition-colors hover:text-clr-text-dark"
+                    >
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+
+                <!--* Logo (all)  -->
+                <div class="flex flex-1 items-center sm:flex-initial md:flex-1">
+                    <a href="/" class="inline-block h-8 cursor-pointer sm:h-9">
+                        <img
+                            src="/assets/logo.svg"
+                            alt="Logo"
+                            class="h-full object-contain object-left"
+                        />
+                    </a>
+                </div>
+
+                <!--* nav (md) -->
+                <nav class="hidden items-center md:flex">
+                    <a href="/" class="group p-2">
+                        <span class="nav-item">Trang chủ</span>
+                    </a>
+                    <a href="/upload/" class="group p-2">
+                        <span class="nav-item nav-active">Tạo ảnh</span>
+                    </a>
+                    <a href="#" class="group p-2"><span class="nav-item">Giới thiệu</span></a>
+                </nav>
+                <!--* action group (all)  -->
+                <div class="flex items-center justify-end sm:flex-1">
+                    <a href="#/login" class="btn btn-md btn-fill">Đăng nhập</a>
+                    <!-- <div class="flex cursor-pointer items-center">
+                        <div class="mr-2 hidden text-right sm:block">
+                            <div class="text-sm font-semibold text-clr-text-dark">Minh Châu</div>
+                            <div class="text-xs font-medium text-clr-text">@minhchau</div>
+                        </div>
+                        <div class="h-[38px] w-[38px] rounded-full shadow-sm shadow-gray-500">
+                            <img
+                                src="/assets/avatar.PNG"
+                                alt="avatar"
+                                class="h-full w-full rounded-full object-cover"
+                            />
+                        </div>
+                    </div> -->
+                </div>
+
+                <!--* Menu open (mobile only) -->
+                <div class="sm:hidden">
+                    <button
+                        id="menu-open-btn"
+                        class="-mr-2 ml-2 cursor-pointer p-2 text-xl text-clr-text"
+                    >
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+
+                <!--* Menu mobile and tablet (mobile + sm) -->
+                <div id="menu-mobile" class="menu-mobile">
+                    <div
+                        id="menu-moblie-overlay"
+                        class="overlay absolute inset-0 hidden bg-black/50 transition-opacity duration-200 sm:block"
+                    ></div>
+                    <div
+                        class="menu-content p-body stack absolute inset-0 w-full bg-white transition-transform duration-300 ease-linear sm:w-96"
+                    >
+                        <div class="flex h-h-header items-center justify-between">
+                            <a href="/" class="inline-block h-8 cursor-pointer sm:h-9">
+                                <img
+                                    src="/assets/logo.svg"
+                                    alt="Logo"
+                                    class="h-full object-contain object-left"
+                                />
+                            </a>
+                            <button
+                                id="menu-close-btn"
+                                class="-mr-2 cursor-pointer px-2 text-2xl hover:text-clr-text-dark"
+                            >
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <nav class="stack flex-1 items-center pt-11">
+                            <a href="/" class="group flex w-full justify-center py-2">
+                                <span class="nav-item">Trang chủ</span>
+                            </a>
+                            <a href="/upload/" class="group flex w-full justify-center py-2">
+                                <span class="nav-item nav-active">Tạo ảnh</span>
+                            </a>
+                            <a href="#" class="group flex w-full justify-center py-2">
+                                <span class="nav-item">Giới thiệu</span>
+                            </a>
+                        </nav>
+                        <div class="stack mb-4">
+                            <!-- <a href="#" class="btn btn-fill btn-md w-full"> Đăng nhập </a> -->
+                            <a class="flex cursor-pointer items-center justify-between">
+                                <div class="flex">
+                                    <div
+                                        class="h-[38px] w-[38px] rounded-full shadow-sm shadow-gray-500"
+                                    >
+                                        <img
+                                            src="/assets/avatar.PNG"
+                                            alt="avatar"
+                                            class="h-full w-full rounded-full object-cover"
+                                        />
+                                    </div>
+                                    <div class="stack ml-2 justify-center">
+                                        <div class="text-sm font-semibold text-clr-text-dark">
+                                            Minh Châu
+                                        </div>
+                                        <div class="text-xs font-medium text-clr-text">
+                                            @minhchau
+                                        </div>
+                                    </div>
+                                </div>
+                                <button
+                                    class="-mr-2 cursor-pointer px-2 text-xl hover:text-primary"
+                                >
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
+
+        <!--* BANNER  -->
+        <section class="p-body py-8 sm:py-11 md:py-14">
+            <h2
+                class="text-center text-xl font-bold text-clr-text-dark sm:text-2xl md:text-[1.75rem]"
+            >
+                Chỉnh sửa
+            </h2>
+        </section>
+
+        <!--* FORM EDIT PHOTO -->
+        <section id="main-section" class="flex justify-center">
+            <div id="edit-photo-grid" class="md:p-body container-grid hidden md:grid-cols-2">
+                <!--* CURRENT PHOTO -->
+                <div id="current-img-section" class="p-body stack items-center md:px-0">
+                    <button
+                        id="edit-img-btn"
+                        class="btn btn-md md:btn-sm btn-outline w-full sm:w-auto md:self-start"
+                    >
+                        Thay đổi ảnh
+                    </button>
+                    <div
+                        class="mt-1 flex w-full justify-center rounded-lg md:mt-2 md:bg-light-gray"
+                    >
+                        <img
+                            id="current-img"
+                            class="img-preview block max-h-[27rem] rounded-lg sm:max-h-[30rem]"
+                            src="/assets/placeholder.png"
+                            alt="Photo"
+                        />
+                    </div>
+                </div>
+
+                <!--*EDIT PHOTO -->
+                <div id="edit-img-section" class="p-body stack !hidden items-center md:px-0">
+                    <div class="flex w-full flex-wrap justify-between">
+                        <div id="tab-type-photo" class="tab-create-photo">
+                            <button value="url" class="tab-item">
+                                <i class="fa-solid fa-link icon"></i>
+                                <span>URL</span>
+                            </button>
+                            <button value="file" class="tab-item">
+                                <i class="fa-solid fa-file-arrow-up icon"></i>
+                                <span>Chọn file</span>
+                            </button>
+                        </div>
+                        <button id="cancle-edit-img-btn" class="btn btn-sm btn-outline">Huỷ</button>
+                    </div>
+
+                    <!--* URL  -->
+                    <div class="-img-input-group url stack w-full items-center">
+                        <div class="stack relative mt-6 w-full md:mt-2">
+                            <input
+                                id="url-input"
+                                class="text-input"
+                                type="text"
+                                value="https://picsum.photos/id/1043/800/600"
+                                placeholder="https//example.com/photo/1234"
+                            />
+                            <div class="input-message w-full">Ảnh không hợp lệ</div>
+                            <div
+                                id="url-input-loader"
+                                class="absolute right-2 top-2 animate-spin text-primary opacity-0"
+                            >
+                                <i class="fa-solid fa-spinner"></i>
+                            </div>
+                        </div>
+                        <div
+                            class="mt-1 flex w-full justify-center rounded-lg md:mt-2 md:bg-light-gray"
+                        >
+                            <img
+                                id="url-preview"
+                                class="img-preview block max-h-[27rem] rounded-lg sm:max-h-[30rem]"
+                                src="/assets/placeholder.png"
+                                alt="Photo"
+                            />
+                        </div>
+                    </div>
+
+                    <!--* FILE  -->
+                    <!--todo: File  -->
+                    <div class="-img-input-group file stack w-full items-center">
+                        <div class="w-full">
+                            <input
+                                type="file"
+                                class="hidden [&.invalid~.input-message]:visible [&.invalid~.input-message]:opacity-100"
+                                id="file-input"
+                            />
+                            <div id="file-input" class="mt-2 flex items-center">
+                                <label
+                                    for="file-input"
+                                    id="file-input-btn"
+                                    class="btn btn-md btn-fill"
+                                >
+                                    Chọn file
+                                </label>
+                                <div for="file-input" class="file-name ml-2 flex-1"></div>
+                            </div>
+                            <div class="input-message w-full">Ảnh không hợp lệ</div>
+                        </div>
+                        <div
+                            class="mt-1 flex w-full justify-center rounded-lg md:mt-2 md:bg-light-gray"
+                        >
+                            <img
+                                id="file-preview"
+                                class="img-preview block max-h-[27rem] rounded-lg sm:max-h-[30rem]"
+                                src="/assets/placeholder.png"
+                                alt="Photo"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-body mt-8 md:mt-2 md:px-0">
+                    <div>
+                        <div class="mb-2 font-bold text-clr-text-dark">Tiêu đề</div>
+                        <input
+                            id="title-input"
+                            class="text-input"
+                            type="text"
+                            placeholder="Mùa thu tại Đà Lạt"
+                        />
+                        <div class="input-message w-full">Tiêu đề không được để trống!</div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="mb-2 font-bold text-clr-text-dark">Mô tả</div>
+                        <input
+                            id="description-input"
+                            class="text-input"
+                            type="text"
+                            placeholder="Khu rừng lá vàng ở Đà Lạt vào mùa thu"
+                        />
+                        <div class="input-message w-full">No error</div>
+                    </div>
+                    <div class="mt-1">
+                        <div class="mb-2 font-bold text-clr-text-dark">Ai có thể xem ảnh này</div>
+                        <div class="flex">
+                            <input
+                                class="input-radio hidden [&:disabled+label]:cursor-default"
+                                type="radio"
+                                id="audience--public"
+                                name="audience"
+                                value="public"
+                                checked
+                            />
+                            <label for="audience--public" class="flex cursor-pointer items-center">
+                                <div class="radio-circle"></div>
+                                <span class="pl-2">Mọi người</span>
+                            </label>
+                            <input
+                                class="input-radio hidden [&:disabled+label]:cursor-default"
+                                type="radio"
+                                id="audience--private"
+                                name="audience"
+                                value="private"
+                            />
+                            <label
+                                for="audience--private"
+                                class="ml-6 flex cursor-pointer items-center"
+                            >
+                                <div class="radio-circle"></div>
+                                <span class="pl-2">Chỉ mình tôi</span>
+                            </label>
+                        </div>
+                        <div class="mt-8 sm:flex">
+                            <button
+                                id="submit-create-photo-btn"
+                                class="btn btn-md btn-fill sm:btn-lg w-full sm:w-36"
+                            >
+                                <div class="loading-submit left-2 mr-2 hidden animate-spin text-lg">
+                                    <i class="fa-solid fa-spinner"></i>
+                                </div>
+                                <span class="whitespace-nowrap">Cập nhật</span>
+                            </button>
+                            <button
+                                id="cancle-btn"
+                                class="btn btn-md btn-outline sm:btn-lg mt-2 w-full sm:ml-2 sm:mt-0 sm:w-36"
+                            >
+                                Bỏ thay đổi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="h-48"></footer>
+    </body>
+</html>

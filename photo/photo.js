@@ -118,7 +118,7 @@ function createHtml(photo) {
     let privateActionHtml;
     if (!photo.user) {
         privateActionHtml = /*html*/ `
-        <a class="btn btn-md btn-outline sm:btn-lg btn-square ml-2">
+        <a href="/edit/?id=${photo._id}" class="btn btn-md btn-outline sm:btn-lg btn-square ml-2">
             <i class="fa-solid fa-pen"></i>
         </a>
         <button
