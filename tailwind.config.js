@@ -32,6 +32,7 @@ module.exports = {
             zIndex: {
                 header: 100,
                 toast: 1000,
+                dialog: 2000,
             },
         },
         screens: {

@@ -3,11 +3,13 @@ import handleMenu from '../js/menu';
 import placeholderImg from '../assets/placeholder.png';
 import createPlaceholderImage from '../js/image';
 import { initToast, createToast } from '../js/toast';
+import { initDialog, createDialog, openDialog, closeDialog } from '../js/dialog';
 
 handleMenu();
 handleHeader();
 createPlaceholderImage('img:not(.img-preview)');
 initToast();
+initDialog();
 
 const debouceFunc = (func, delay) => {
     let timeoutId = null;
@@ -52,15 +54,16 @@ const toBase64 = (file) =>
 // ======================
 let user = null;
 
+const deleteBtn = document.getElementById('delete-btn');
 const editImgBtn = document.getElementById('edit-img-btn');
-const cancleEditImgBtn = document.getElementById('cancle-edit-img-btn');
+const cancelEditImgBtn = document.getElementById('cancel-edit-img-btn');
 
 let typeChoosePhotoState = 'url';
 let currentPhotoState = true;
 let photoState = {};
 const currentImgSectionElem = document.getElementById('current-img-section');
 const editImgSectionElem = document.getElementById('edit-img-section');
-const cancleBtn = document.getElementById('cancle-btn');
+const cancelBtn = document.getElementById('cancel-btn');
 const currentImgElem = document.getElementById('current-img');
 const tabTypePhoto = document.getElementById('tab-type-photo');
 const tabTypePhotoBtns = tabTypePhoto.querySelectorAll('#tab-type-photo > button[value]');
@@ -475,7 +478,7 @@ editImgBtn.addEventListener('click', () => {
     currentPhotoState = false;
     checkCanSubmit();
 });
-cancleEditImgBtn.addEventListener('click', () => {
+cancelEditImgBtn.addEventListener('click', () => {
     currentImgSectionElem.classList.remove('!hidden');
     editImgSectionElem.classList.add('!hidden');
     currentPhotoState = true;
@@ -483,8 +486,89 @@ cancleEditImgBtn.addEventListener('click', () => {
 });
 
 //* HANDLE CANCLE BTN
-cancleBtn.addEventListener('click', () => {
+cancelBtn.addEventListener('click', () => {
     window.history.back();
+});
+
+//* HANDLE DELETE IMG BTN
+deleteBtn.addEventListener('click', () => {
+    //* CREATE DIALOG
+    createDialog(/*html*/ `
+        <div class="p-body">
+            <div class="max-w-[28rem] min-w-[19rem] rounded-lg bg-white p-6">
+                <div class="font-bold text-clr-text-dark">Bạn có chắc chắn muốn xoá không?</div>
+                <p class="mt-4 text-sm">Lưu ý: Bạn không thể không phục lại ảnh sau khi xoá!</p>
+                <div class="mt-4 sm:flex">
+                    <button id="cancel-delete-btn" class="btn btn-outline btn-md w-full sm:w-auto">Không</button>
+                    <button
+                        id="confirm-delete-btn"
+                        class="btn btn-fill btn-md mt-2 w-full bg-red-500 hover:bg-red-600 sm:mt-0 sm:ml-2 sm:w-auto"
+                    >
+                        <div class="loading left-2 mr-2 hidden animate-spin text-lg">
+                            <i class="fa-solid fa-spinner"></i>
+                        </div>
+                        <span class="whitespace-nowrap">Xoá</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `);
+    openDialog();
+    const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+    const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+    const loader = confirmDeleteBtn.querySelector('.loading');
+    cancelDeleteBtn.addEventListener('click', () => closeDialog());
+
+    //* HANDLE CONFIRM DELTE
+    confirmDeleteBtn.addEventListener('click', () => {
+        console.log('xoa');
+        loader.classList.remove('hidden');
+        confirmDeleteBtn.disabled = true;
+        //todo: call api
+        fetch(`${import.meta.env.VITE_API_URL}/photo/${photoState._id}`, {
+            method: 'DELETE',
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.success) {
+                    console.log('Xoá thành công');
+                    createDialogAfterDelete();
+                } else {
+                    closeDialog();
+                    createToast('error', 'Lỗi xoá ảnh', 'Xoá ảnh không thành công.', 5000);
+                }
+            })
+            .catch((e) => {
+                console.log(e);
+                closeDialog();
+                createToast('error', 'Lỗi', 'Không thể xoá ảnh', 5000);
+            })
+            .finally(() => {
+                if (loader) {
+                    loader.classList.add('hidden');
+                }
+                if (confirmDeleteBtn) {
+                    confirmDeleteBtn.disabled = false;
+                }
+            });
+    });
+
+    function createDialogAfterDelete() {
+        createDialog(
+            /*html*/ `
+            <div class="p-body">
+                <div class="max-w-[28rem] min-w-[19rem] rounded-lg bg-white p-6">
+                    <div class="font-bold text-clr-text-dark">Đã xoá ảnh</div>
+                    <p class="mt-4 text-sm">Bạn có thể về trang chủ!</p>
+                    <div class="mt-4 sm:flex">
+                        <a href="/" class="btn btn-fill btn-md w-full sm:w-auto">Về trang chủ</a>
+                    </div>
+                </div>
+            </div>
+        `,
+            false
+        );
+    }
 });
 
 function createErrorHtml() {

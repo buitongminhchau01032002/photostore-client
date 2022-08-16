@@ -2,11 +2,13 @@ import handleHeader from '../js/header';
 import handleMenu from '../js/menu';
 import createPlaceholderImage from '../js/image';
 import { initToast, createToast } from '../js/toast';
+import { initDialog, createDialog, openDialog, closeDialog } from '../js/dialog';
 
 createPlaceholderImage('img');
 handleMenu();
 handleHeader();
 initToast();
+initDialog();
 
 let photoState = {};
 let idPhoto;
@@ -23,6 +25,7 @@ function init() {
                 const photoGridElem = createHtml(data.photo);
                 photoSectionElem.innerHTML = photoGridElem;
                 createPlaceholderImage('img');
+                handleDeleteBtn();
             } else {
                 console.log(data);
                 switch (data.error.code) {
@@ -77,6 +80,92 @@ function init() {
 }
 init();
 
+function handleDeleteBtn() {
+    //* HANDLE DELETE IMG BTN
+    const deleteBtn = document.getElementById('delete-btn');
+    if (deleteBtn) {
+        deleteBtn.addEventListener('click', () => {
+            //* CREATE DIALOG
+            createDialog(/*html*/ `
+                <div class="p-body">
+                    <div class="max-w-[28rem] min-w-[19rem] rounded-lg bg-white p-6">
+                        <div class="font-bold text-clr-text-dark">Bạn có chắc chắn muốn xoá không?</div>
+                        <p class="mt-4 text-sm">Lưu ý: Bạn không thể không phục lại ảnh sau khi xoá!</p>
+                        <div class="mt-4 sm:flex">
+                            <button id="cancel-delete-btn" class="btn btn-outline btn-md w-full sm:w-auto">Không</button>
+                            <button
+                                id="confirm-delete-btn"
+                                class="btn btn-fill btn-md mt-2 w-full bg-red-500 hover:bg-red-600 sm:mt-0 sm:ml-2 sm:w-auto"
+                            >
+                                <div class="loading left-2 mr-2 hidden animate-spin text-lg">
+                                    <i class="fa-solid fa-spinner"></i>
+                                </div>
+                                <span class="whitespace-nowrap">Xoá</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `);
+            openDialog();
+            const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+            const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+            const loader = confirmDeleteBtn.querySelector('.loading');
+            cancelDeleteBtn.addEventListener('click', () => closeDialog());
+
+            //* HANDLE CONFIRM DELTE
+            confirmDeleteBtn.addEventListener('click', () => {
+                console.log('xoa');
+                loader.classList.remove('hidden');
+                confirmDeleteBtn.disabled = true;
+                //todo: call api
+                fetch(`${import.meta.env.VITE_API_URL}/photo/${idPhoto}`, {
+                    method: 'DELETE',
+                })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        if (data.success) {
+                            console.log('Xoá thành công');
+                            createDialogAfterDelete();
+                        } else {
+                            closeDialog();
+                            createToast('error', 'Lỗi xoá ảnh', 'Xoá ảnh không thành công.', 5000);
+                        }
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                        closeDialog();
+                        createToast('error', 'Lỗi', 'Không thể xoá ảnh', 5000);
+                    })
+                    .finally(() => {
+                        if (loader) {
+                            loader.classList.add('hidden');
+                        }
+                        if (confirmDeleteBtn) {
+                            confirmDeleteBtn.disabled = false;
+                        }
+                    });
+            });
+
+            function createDialogAfterDelete() {
+                createDialog(
+                    /*html*/ `
+                    <div class="p-body">
+                        <div class="max-w-[28rem] min-w-[19rem] rounded-lg bg-white p-6">
+                            <div class="font-bold text-clr-text-dark">Đã xoá ảnh</div>
+                            <p class="mt-4 text-sm">Bạn có thể về trang chủ!</p>
+                            <div class="mt-4 sm:flex">
+                                <a href="/" class="btn btn-fill btn-md w-full sm:w-auto">Về trang chủ</a>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                    false
+                );
+            }
+        });
+    }
+}
+
 function createHtml(photo) {
     const userHtml = photo.user
         ? /*html*/ `
@@ -122,6 +211,7 @@ function createHtml(photo) {
             <i class="fa-solid fa-pen"></i>
         </a>
         <button
+            id="delete-btn"
             class="btn btn-md btn-outline sm:btn-lg btn-square ml-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white"
         >
             <i class="fa-solid fa-trash-can"></i>
