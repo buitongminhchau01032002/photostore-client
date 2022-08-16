@@ -2,6 +2,7 @@ import handleMenu from './js/menu';
 import handleHeader from './js/header';
 import createPlaceholderImage from './js/image';
 import { initToast, createToast } from './js/toast';
+import avatarNoneUser from './assets/avatar_none_user.png';
 
 handleMenu();
 handleHeader();
@@ -69,7 +70,7 @@ function createImgCard(imageData) {
         : /*html*/ `
             <div class="inline-flex items-center">
                 <img
-                    src="/assets/avatar_none_user.png"
+                    src="${avatarNoneUser}"
                     alt="avatar"
                     class="h-6 w-6 opacity-90 rounded-full bg-white border border-light-gray object-cover"
                 />
@@ -93,7 +94,7 @@ function createImgCard(imageData) {
         : /*html*/ `
             <div class="inline-flex items-center">
                 <img
-                    src="/assets/avatar_none_user.png"
+                    src="${avatarNoneUser}"
                     alt="avatar"
                     class="h-6 w-6 rounded-full bg-white border border-light-gray object-cover"
                 />

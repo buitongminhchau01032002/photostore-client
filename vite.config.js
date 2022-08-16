@@ -9,6 +9,7 @@ export default defineConfig({
                 main: resolve(__dirname, 'index.html'),
                 upload: resolve(__dirname, 'upload/index.html'),
                 photo: resolve(__dirname, 'photo/index.html'),
+                eidt: resolve(__dirname, 'edit/index.html'),
             },
         },
     },

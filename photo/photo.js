@@ -3,6 +3,7 @@ import handleMenu from '../js/menu';
 import createPlaceholderImage from '../js/image';
 import { initToast, createToast } from '../js/toast';
 import { initDialog, createDialog, openDialog, closeDialog } from '../js/dialog';
+import avatarNoneUser from '../assets/avatar_none_user.png';
 
 createPlaceholderImage('img');
 handleMenu();
@@ -193,7 +194,7 @@ function createHtml(photo) {
         <div href="#/user" class="flex">
             <div class="h-[34px] w-[34px] rounded-full shadow-sm shadow-gray-500">
                 <img
-                    src="/assets/avatar_none_user.png"
+                    src="${avatarNoneUser}"
                     alt="avatar"
                     class="h-full w-full rounded-full object-cover border border-light-gray"
                 />
