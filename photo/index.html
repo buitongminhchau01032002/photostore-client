@@ -47,25 +47,29 @@
                     <a href="/" class="group p-2">
                         <span class="nav-item">Trang chủ</span>
                     </a>
-                    <a href="/upload/" class="group p-2"><span class="nav-item">Tạo ảnh</span></a>
+                    <a href="/upload/" class="group p-2">
+                        <span class="nav-item">Tạo ảnh</span>
+                    </a>
                     <a href="#" class="group p-2"><span class="nav-item">Giới thiệu</span></a>
                 </nav>
                 <!--* action group (all)  -->
                 <div class="flex items-center justify-end sm:flex-1">
-                    <a href="#/login" class="btn btn-md btn-fill">Đăng nhập</a>
-                    <!-- <div class="flex cursor-pointer items-center">
-                        <div class="mr-2 hidden text-right sm:block">
-                            <div class="text-sm font-semibold text-clr-text-dark">Minh Châu</div>
-                            <div class="text-xs font-medium text-clr-text">@minhchau</div>
+                    <div
+                        id="header-action-placeholder"
+                        class="btn btn-md w-28 animate-pulse bg-gray-200"
+                    ></div>
+                    <button id="header-login-btn" href="#/login" class="btn btn-md btn-fill hidden">
+                        Đăng nhập
+                    </button>
+                    <div id="header-account" class="hidden cursor-pointer items-center">
+                        <div class="mr-2 hidden text-right md:block">
+                            <div class="h-4 w-20 animate-pulse bg-gray-200"></div>
+                            <div class="mt-1 h-4 w-16 animate-pulse bg-gray-200"></div>
                         </div>
-                        <div class="h-[38px] w-[38px] rounded-full shadow-sm shadow-gray-500">
-                            <img
-                                src="/assets/avatar.PNG"
-                                alt="avatar"
-                                class="h-full w-full rounded-full object-cover"
-                            />
-                        </div>
-                    </div> -->
+                        <div
+                            class="h-[38px] w-[38px] animate-pulse rounded-full bg-gray-200 shadow-sm"
+                        ></div>
+                    </div>
                 </div>
 
                 <!--* Menu open (mobile only) -->
@@ -113,7 +117,7 @@
                                 <span class="nav-item">Giới thiệu</span>
                             </a>
                         </nav>
-                        <div class="stack mb-4">
+                        <div class="stack mb-4 !hidden">
                             <!-- <a href="#" class="btn btn-fill btn-md w-full"> Đăng nhập </a> -->
                             <a class="flex cursor-pointer items-center justify-between">
                                 <div class="flex">

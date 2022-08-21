@@ -4,18 +4,62 @@ import createPlaceholderImage from './js/image';
 import { initToast, createToast } from './js/toast';
 import avatarNoneUser from './assets/avatar_none_user.png';
 
+// Import the functions you need from the SDKs you need
+import { initializeApp } from 'firebase/app';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+const firebaseConfig = {
+    apiKey: 'AIzaSyAqd1aWe500bQab_vPBLkno-9T03RG2AWM',
+    authDomain: 'photostore-fee86.firebaseapp.com',
+    projectId: 'photostore-fee86',
+    storageBucket: 'photostore-fee86.appspot.com',
+    messagingSenderId: '385710637523',
+    appId: '1:385710637523:web:2dd00fbba32599f355ef26',
+    measurementId: 'G-TK6PWW0RR7',
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
 handleMenu();
-handleHeader();
+handleHeader(app);
 createPlaceholderImage('img');
 initToast();
-
 let imgListState = [];
 
 const imgListElem = document.getElementById('img-list');
 
-// Init
-function Init() {
-    fetch(`${import.meta.env.VITE_API_URL}/photo`)
+const analysisPlaceholder = document.getElementById('banner-analysis-placeholder');
+const analysis = document.getElementById('banner-analysis');
+
+function getAnalysis() {
+    fetch(`${import.meta.env.VITE_API_URL}/analysis`)
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.success) {
+                analysisPlaceholder.classList.add('!hidden');
+                analysis.className = 'mt-2 flex justify-center md:mt-4';
+                analysis.innerHTML = /*html*/ `
+                    <div class="stack mx-0.5 w-28 items-center">
+                        <span class="text-[2rem] font-light text-primary">${data?.analysis?.photoCount}</span>
+                        <span class="text-center text-sm">Ảnh đã tải lên</span>
+                    </div>
+                    <div class="stack mx-0.5 w-28 items-center">
+                        <span class="text-[2rem] font-light text-primary">${data?.analysis?.userCount}</span>
+                        <span class="text-center text-sm">Người đăng ký</span>
+                    </div>
+                `;
+            }
+        })
+        .catch((e) => console.log(e));
+}
+getAnalysis();
+
+onAuthStateChanged(auth, (user) => {
+    let headers = {};
+    if (user) {
+        const token = user.accessToken;
+        headers.Authorization = 'Bearer ' + token;
+    }
+    fetch(`${import.meta.env.VITE_API_URL}/photo`, { headers })
         .then((res) => res.json())
         .then((data) => {
             if (data.success) {
@@ -39,9 +83,7 @@ function Init() {
             const errorHtml = createErrorHtml();
             imgListElem.innerHTML = errorHtml;
         });
-}
-
-Init();
+});
 
 // Create html
 function renderImgs() {

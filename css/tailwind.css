@@ -10,7 +10,9 @@
     .test-shadow {
         box-shadow: 0 0 1px 1px red;
     }
-
+    .shadow-popper {
+        box-shadow: 0 2px 12px 6px rgb(0 0 0 / 0.1);
+    }
     /** FLEX */
     .stack {
         @apply flex flex-col;

@@ -5,8 +5,23 @@ import createPlaceholderImage from '../js/image';
 import { initToast, createToast } from '../js/toast';
 import { initDialog, createDialog, openDialog, closeDialog } from '../js/dialog';
 
+// Import the functions you need from the SDKs you need
+import { initializeApp } from 'firebase/app';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+const firebaseConfig = {
+    apiKey: 'AIzaSyAqd1aWe500bQab_vPBLkno-9T03RG2AWM',
+    authDomain: 'photostore-fee86.firebaseapp.com',
+    projectId: 'photostore-fee86',
+    storageBucket: 'photostore-fee86.appspot.com',
+    messagingSenderId: '385710637523',
+    appId: '1:385710637523:web:2dd00fbba32599f355ef26',
+    measurementId: 'G-TK6PWW0RR7',
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
 handleMenu();
-handleHeader();
+handleHeader(app);
 createPlaceholderImage('img:not(.img-preview)');
 initToast();
 initDialog();
@@ -52,7 +67,7 @@ const toBase64 = (file) =>
     });
 
 // ======================
-let user = null;
+let userState = null;
 
 const deleteBtn = document.getElementById('delete-btn');
 const editImgBtn = document.getElementById('edit-img-btn');
@@ -79,7 +94,15 @@ const titleInput = document.getElementById('title-input');
 const descriptionInput = document.getElementById('description-input');
 const submitBtn = document.getElementById('submit-create-photo-btn');
 
-// FIRST CHANGE
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        userState = user;
+    } else {
+        userState = null;
+    }
+    initUI();
+});
+
 const initUI = () => {
     tabTypePhotoBtns.forEach((tabTypePhotoBtn) => {
         tabTypePhotoBtn.classList.remove('active');
@@ -89,15 +112,17 @@ const initUI = () => {
     });
     // Change section ui
     imgInputGroups.forEach((elem) => {
-        elem.classList.add('!hidden');
+        elem.classList.add('!!hidden');
         if (elem.classList.contains(typeChoosePhotoState)) {
-            elem.classList.remove('!hidden');
+            elem.classList.remove('!!hidden');
         }
     });
 
     // Load photo preview url
     const loader = document.getElementById('url-input-loader');
-    loader.classList.add('opacity-100');
+    if (loader) {
+        loader.classList.add('opacity-100');
+    }
     checkImage(urlInput.value, 5000)
         .then(() => {
             urlPreview.src = urlInput.value;
@@ -111,7 +136,9 @@ const initUI = () => {
             }
         })
         .finally(() => {
-            loader.classList.remove('opacity-100');
+            if (loader) {
+                loader.classList.remove('opacity-100');
+            }
             checkCanSubmit();
         });
 
@@ -123,13 +150,27 @@ const initUI = () => {
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
 
-    fetch(`${import.meta.env.VITE_API_URL}/photo/${id}`)
+    const headers = {};
+    if (userState) {
+        const token = userState.accessToken;
+        headers.Authorization = 'Bearer ' + token;
+    }
+
+    fetch(`${import.meta.env.VITE_API_URL}/photo/${id}`, { headers })
         .then((res) => res.json())
         .then((data) => {
             if (data.success) {
-                photoState = data.photo;
-                document.getElementById('edit-photo-grid').classList.remove('hidden');
-                changePhotoStateUI();
+                if (!data.photo.user || (userState && data.photo.user.uid === userState.uid)) {
+                    photoState = data.photo;
+                    document.getElementById('edit-photo-grid').classList.remove('!hidden');
+                    document.getElementById('error-section').classList.add('!hidden');
+
+                    changePhotoStateUI();
+                } else {
+                    createToast('error', 'Lỗi truy cập', 'Không thể chỉnh sửa ảnh này', 4000);
+                    document.getElementById('edit-photo-grid').classList.add('!hidden');
+                    document.getElementById('error-section').classList.remove('!hidden');
+                }
             } else {
                 switch (data.error.code) {
                     case 'INVALID_ID':
@@ -170,21 +211,20 @@ const initUI = () => {
                     default:
                         break;
                 }
-                const errorHtml = createErrorHtml();
-                document.getElementById('main-section').innerHTML = errorHtml;
+                document.getElementById('edit-photo-grid').classList.add('!hidden');
+                document.getElementById('error-section').classList.remove('!hidden');
             }
         })
         .catch((e) => {
             console.log(e);
             createToast('error', 'Lỗi', 'Vui lòng kiểm tra kết nối mạng.', 5000);
-            const errorHtml = createErrorHtml();
-            document.getElementById('main-section').innerHTML = errorHtml;
+            document.getElementById('edit-photo-grid').classList.add('!hidden');
+            document.getElementById('error-section').classList.remove('!hidden');
         })
         .finally(() => {
             checkCanSubmit();
         });
 };
-initUI();
 
 //* CHANGE PHOTO STATE
 function changePhotoStateUI() {
@@ -205,6 +245,7 @@ function changePhotoStateUI() {
             }
         });
     } else {
+        console.log('user');
         audiences.forEach((elem) => {
             elem.disabled = false;
             elem.checked = false;
@@ -261,9 +302,9 @@ const handleChangeTypeChoosePhoto = (e) => {
         target.classList.add('active');
         // Change section ui
         imgInputGroups.forEach((elem) => {
-            elem.classList.add('!hidden');
+            elem.classList.add('!!hidden');
             if (elem.classList.contains(typeChoosePhotoState)) {
-                elem.classList.remove('!hidden');
+                elem.classList.remove('!!hidden');
             }
         });
     }
@@ -374,7 +415,7 @@ submitBtn.addEventListener('click', async () => {
     submitBtn.disabled = true;
     const loader = submitBtn.querySelector('.loading-submit');
     if (loader) {
-        loader.classList.remove('hidden');
+        loader.classList.remove('!hidden');
     }
     const dataForm = {};
     const check = checkCanSubmit();
@@ -382,7 +423,7 @@ submitBtn.addEventListener('click', async () => {
         console.log('invalid');
         submitBtn.disabled = false;
         if (loader) {
-            loader.classList.add('hidden');
+            loader.classList.add('!hidden');
         }
         return;
     }
@@ -395,7 +436,7 @@ submitBtn.addEventListener('click', async () => {
 
                 submitBtn.disabled = false;
                 if (loader) {
-                    loader.classList.add('hidden');
+                    loader.classList.add('!hidden');
                 }
                 return;
             }
@@ -407,7 +448,7 @@ submitBtn.addEventListener('click', async () => {
 
                 submitBtn.disabled = false;
                 if (loader) {
-                    loader.classList.add('hidden');
+                    loader.classList.add('!hidden');
                 }
                 return;
             }
@@ -438,11 +479,18 @@ submitBtn.addEventListener('click', async () => {
     // Call api
     submitBtn.disabled = true;
 
+    const headers = {
+        'Content-Type': 'application/json',
+    };
+
+    if (userState) {
+        const token = userState.accessToken;
+        headers.Authorization = 'Bearer ' + token;
+    }
+
     fetch(`${import.meta.env.VITE_API_URL}/photo/${photoState._id}`, {
         method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify(dataForm),
     })
         .then((res) => res.json())
@@ -462,25 +510,25 @@ submitBtn.addEventListener('click', async () => {
         .finally(() => {
             submitBtn.disabled = false;
             if (loader) {
-                loader.classList.add('hidden');
+                loader.classList.add('!hidden');
             }
             changePhotoStateUI();
-            currentImgSectionElem.classList.remove('!hidden');
-            editImgSectionElem.classList.add('!hidden');
+            currentImgSectionElem.classList.remove('!!hidden');
+            editImgSectionElem.classList.add('!!hidden');
             currentPhotoState = true;
         });
 });
 
 //* HANDLE EDIT IMG BTN
 editImgBtn.addEventListener('click', () => {
-    currentImgSectionElem.classList.add('!hidden');
-    editImgSectionElem.classList.remove('!hidden');
+    currentImgSectionElem.classList.add('!!hidden');
+    editImgSectionElem.classList.remove('!!hidden');
     currentPhotoState = false;
     checkCanSubmit();
 });
 cancelEditImgBtn.addEventListener('click', () => {
-    currentImgSectionElem.classList.remove('!hidden');
-    editImgSectionElem.classList.add('!hidden');
+    currentImgSectionElem.classList.remove('!!hidden');
+    editImgSectionElem.classList.add('!!hidden');
     currentPhotoState = true;
     checkCanSubmit();
 });
@@ -504,7 +552,7 @@ deleteBtn.addEventListener('click', () => {
                         id="confirm-delete-btn"
                         class="btn btn-fill btn-md mt-2 w-full bg-red-500 hover:bg-red-600 sm:mt-0 sm:ml-2 sm:w-auto"
                     >
-                        <div class="loading left-2 mr-2 hidden animate-spin text-lg">
+                        <div class="loading left-2 mr-2 !hidden animate-spin text-lg">
                             <i class="fa-solid fa-spinner"></i>
                         </div>
                         <span class="whitespace-nowrap">Xoá</span>
@@ -522,11 +570,17 @@ deleteBtn.addEventListener('click', () => {
     //* HANDLE CONFIRM DELTE
     confirmDeleteBtn.addEventListener('click', () => {
         console.log('xoa');
-        loader.classList.remove('hidden');
+        loader.classList.remove('!hidden');
         confirmDeleteBtn.disabled = true;
-        //todo: call api
+
+        const headers = {};
+        if (userState) {
+            const token = userState.accessToken;
+            headers.Authorization = 'Bearer ' + token;
+        }
         fetch(`${import.meta.env.VITE_API_URL}/photo/${photoState._id}`, {
             method: 'DELETE',
+            headers,
         })
             .then((res) => res.json())
             .then((data) => {
@@ -545,7 +599,7 @@ deleteBtn.addEventListener('click', () => {
             })
             .finally(() => {
                 if (loader) {
-                    loader.classList.add('hidden');
+                    loader.classList.add('!hidden');
                 }
                 if (confirmDeleteBtn) {
                     confirmDeleteBtn.disabled = false;
@@ -570,15 +624,3 @@ deleteBtn.addEventListener('click', () => {
         );
     }
 });
-
-function createErrorHtml() {
-    return /*html*/ `
-        <div class="stack items-center pt-11">
-            <h2 class="text-primary font-light text-2xl">Ồ, có gì đó không đúng!</h2>
-            <p class="mt-5 max-w-2xl text-center p-body">Không thể truy cập ảnh. Có thể do kết nối, đường dẫn không đúng, ảnh đã bị xoá hoặc bạn không có quyền truy cập ảnh này!</p>
-            <div class="p-body mt-6">
-                <a href="/" class="btn btn-md btn-fill w-full sm:w-auto">Về trang chủ</a>
-            </div>
-        </div>
-    `;
-}

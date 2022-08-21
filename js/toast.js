@@ -33,6 +33,7 @@ function createToast(type = 'success', title = '', description = '', duration = 
             iconHtml = '<i class="fa-solid fa-circle-check"></i>';
             colorClass = 'bg-green-400';
             colorMobile = 'bg-green-600';
+            break;
         case 'info':
             iconHtml = '<i class="fa-solid fa-circle-info"></i>';
             colorClass = 'bg-blue-400';

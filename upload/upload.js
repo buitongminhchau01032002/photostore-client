@@ -4,8 +4,23 @@ import placeholderImg from '../assets/placeholder.png';
 import createPlaceholderImage from '../js/image';
 import { initToast, createToast } from '../js/toast';
 
+// Import the functions you need from the SDKs you need
+import { initializeApp } from 'firebase/app';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+const firebaseConfig = {
+    apiKey: 'AIzaSyAqd1aWe500bQab_vPBLkno-9T03RG2AWM',
+    authDomain: 'photostore-fee86.firebaseapp.com',
+    projectId: 'photostore-fee86',
+    storageBucket: 'photostore-fee86.appspot.com',
+    messagingSenderId: '385710637523',
+    appId: '1:385710637523:web:2dd00fbba32599f355ef26',
+    measurementId: 'G-TK6PWW0RR7',
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
 handleMenu();
-handleHeader();
+handleHeader(app);
 createPlaceholderImage('img:not(.img-preview)');
 initToast();
 
@@ -50,7 +65,7 @@ const toBase64 = (file) =>
     });
 
 // ======================
-let user = null;
+let userState = null;
 let typeChoosePhotoState = 'url';
 const tabTypePhoto = document.getElementById('tab-type-photo');
 const tabTypePhotoBtns = tabTypePhoto.querySelectorAll('#tab-type-photo > button[value]');
@@ -65,6 +80,32 @@ const filePreview = document.getElementById('file-preview');
 const titleInput = document.getElementById('title-input');
 const descriptionInput = document.getElementById('description-input');
 const submitBtn = document.getElementById('submit-create-photo-btn');
+const audiences = document.querySelectorAll('input[name="audience"]');
+
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        userState = user;
+    } else {
+        userState = null;
+    }
+    handleAudicence(user);
+});
+function handleAudicence(user) {
+    if (user) {
+        audiences.forEach((elem) => {
+            elem.disabled = false;
+        });
+    } else {
+        audiences.forEach((elem) => {
+            if (elem.value === 'public') {
+                elem.disabled = false;
+                elem.checked = true;
+            } else {
+                elem.disabled = true;
+            }
+        });
+    }
+}
 
 // FIRST CHANGE
 const initUI = () => {
@@ -312,7 +353,11 @@ submitBtn.addEventListener('click', async () => {
     // Audience
     const audience = document.querySelector('input[name="audience"]:checked');
     if (audience) {
-        dataForm.audience = audience.value;
+        if (audience === 'public') {
+            dataForm.public = true;
+        } else {
+            dataForm.public = false;
+        }
     } else {
         console.log('no audience');
         return;
@@ -322,11 +367,17 @@ submitBtn.addEventListener('click', async () => {
     submitBtn.disabled = true;
     console.log(dataForm.photo);
 
+    const headers = {
+        'Content-Type': 'application/json',
+    };
+    if (userState) {
+        const token = userState.accessToken;
+        headers.Authorization = 'Bearer ' + token;
+    }
+
     fetch(`${import.meta.env.VITE_API_URL}/photo`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify(dataForm),
     })
         .then((res) => res.json())
