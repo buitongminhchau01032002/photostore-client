@@ -81,14 +81,12 @@ function createToast(type = 'success', title = '', description = '', duration = 
             if (toastElem) {
                 toastElem.remove();
             }
-            console.log('remove');
         }, delayExit);
     };
 
     const closeBtn = toastElem.querySelector('.close-btn');
     const handleCloseBtn = () => {
         closeBtn.removeEventListener('click', handleCloseBtn);
-        console.log('click close');
         exitToast();
     };
     closeBtn.addEventListener('click', handleCloseBtn);

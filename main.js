@@ -92,6 +92,12 @@ function renderImgs() {
     }
     const html = imgListState.map((imageDate) => createImgCard(imageDate)).join('');
     imgListElem.innerHTML = html;
+    const downloadBtns = document.querySelectorAll('.download-img');
+    downloadBtns.forEach((elem) => {
+        elem.onclick = () => {
+            downloadImage(elem.value, elem.getAttribute('titledownload'));
+        };
+    });
 }
 
 function createImgCard(imageData) {
@@ -169,7 +175,11 @@ function createImgCard(imageData) {
                         <h3>${imageData.title || ''}</h3>
                     </a>
                 </div>
-                <button class="btn btn-md btn-fill btn-square ml-1 mt-2 text-base">
+                <button
+                    value="${imageData.url || '#'}" 
+                    titledownload="${imageData.title || ''}" 
+                    class="download-img btn btn-md btn-fill btn-square ml-1 mt-2 text-base"
+                >
                     <i class="fa-solid fa-download"></i>
                 </button>
             </div>
@@ -190,7 +200,11 @@ function createImgCard(imageData) {
                             <h3>${imageData.title || ''}</h3>
                         </a>
                     </div>
-                    <button class="btn btn-md btn-fill btn-square mb-2 ml-1 text-base">
+                    <button
+                        value="${imageData.url || '#'}" 
+                        titledownload="${imageData.title || ''}" 
+                        class="download-img btn btn-md btn-fill btn-square mb-2 ml-1 text-base"
+                    >
                         <i class="fa-solid fa-download"></i>
                     </button>
                 </div>
@@ -206,4 +220,17 @@ function createErrorHtml() {
             <p class="mt-5 max-w-2xl text-center p-body">Không thể hiển thị ảnh. Hãy kiểm tra kết nối và thử lại</p>
         </div>
     `;
+}
+
+async function downloadImage(imageSrc, title) {
+    const image = await fetch(imageSrc);
+    const imageBlog = await image.blob();
+    const imageURL = URL.createObjectURL(imageBlog);
+
+    const link = document.createElement('a');
+    link.href = imageURL;
+    link.download = title;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }

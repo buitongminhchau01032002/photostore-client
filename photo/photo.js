@@ -58,8 +58,13 @@ function loadImg() {
                 photoSectionElem.innerHTML = photoGridElem;
                 createPlaceholderImage('img');
                 handleDeleteBtn();
+                const downloadBtn = document.getElementById('download-btn');
+                if (downloadBtn) {
+                    downloadBtn.onclick = () => {
+                        downloadImage(data.photo.url, data.photo.title);
+                    };
+                }
             } else {
-                console.log(data);
                 switch (data.error.code) {
                     case 'INVALID_ID':
                         createToast(
@@ -145,7 +150,6 @@ function handleDeleteBtn() {
 
             //* HANDLE CONFIRM DELTE
             confirmDeleteBtn.addEventListener('click', () => {
-                console.log('xoa');
                 loader.classList.remove('hidden');
                 confirmDeleteBtn.disabled = true;
 
@@ -161,7 +165,6 @@ function handleDeleteBtn() {
                     .then((res) => res.json())
                     .then((data) => {
                         if (data.success) {
-                            console.log('Xoá thành công');
                             createDialogAfterDelete();
                         } else {
                             closeDialog();
@@ -242,7 +245,6 @@ function createHtml(photo) {
         `;
 
     let privateActionHtml;
-    console.log(photo.user);
     if (!photo.user || (userState && photo.user.uid === userState.uid)) {
         privateActionHtml = /*html*/ `
         <a href="/edit/?id=${photo._id}" class="btn btn-md btn-outline sm:btn-lg btn-square ml-2">
@@ -282,6 +284,7 @@ function createHtml(photo) {
             <div>
                 <div class="mt-7 flex sm:inline-flex">
                     <button
+                        id="download-btn"
                         class="btn btn-md btn-fill sm:btn-lg flex-1 sm:w-52 sm:flex-initial"
                     >
                         Tải xuống
@@ -304,4 +307,17 @@ function createErrorHtml() {
             </div>
         </div>
     `;
+}
+
+async function downloadImage(imageSrc, title) {
+    const image = await fetch(imageSrc);
+    const imageBlog = await image.blob();
+    const imageURL = URL.createObjectURL(imageBlog);
+
+    const link = document.createElement('a');
+    link.href = imageURL;
+    link.download = title;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }

@@ -69,7 +69,6 @@ const handleHeader = (app) => {
         },
         onMount(instance) {
             const signoutBtn = document.getElementById('header-account-signout-btn');
-            console.log(signoutBtn);
             if (signoutBtn) {
                 signoutBtn.onclick = () => {
                     instance.hide();
@@ -150,12 +149,6 @@ const handleHeader = (app) => {
                         // The AuthCredential type that was used.
                         const credential = GoogleAuthProvider.credentialFromError(error);
                         // ...
-                        console.log({
-                            errorCode,
-                            errorMessage,
-                            email,
-                            credential,
-                        });
                         closeDialog();
                         createToast('error', 'Thất bại', 'Đăng nhập không thành công', 3000);
                     });
@@ -235,7 +228,6 @@ const handleHeader = (app) => {
         } else {
             // User is signed out
             // ...
-            console.log('State: Logouted');
             loginBtn.classList.remove('hidden');
             accountElem.classList.add('hidden');
             accountElem.classList.remove('flex');

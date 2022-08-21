@@ -309,7 +309,6 @@ submitBtn.addEventListener('click', async () => {
     const dataForm = {};
     const check = checkCanSubmit();
     if (!check) {
-        console.log('invalid');
         submitBtn.disabled = false;
         if (loader) {
             loader.classList.add('hidden');
@@ -365,7 +364,6 @@ submitBtn.addEventListener('click', async () => {
 
     // Call api
     submitBtn.disabled = true;
-    console.log(dataForm.photo);
 
     const headers = {
         'Content-Type': 'application/json',
@@ -388,7 +386,6 @@ submitBtn.addEventListener('click', async () => {
                 descriptionInput.value = '';
             } else {
                 createToast('error', 'Lỗi tạo ảnh', 'Tạo ảnh không thành công.', 5000);
-                console.log(data);
             }
         })
         .catch((e) => {

@@ -245,7 +245,6 @@ function changePhotoStateUI() {
             }
         });
     } else {
-        console.log('user');
         audiences.forEach((elem) => {
             elem.disabled = false;
             elem.checked = false;
@@ -500,7 +499,6 @@ submitBtn.addEventListener('click', async () => {
                 photoState = data.photo;
             } else {
                 createToast('error', 'Lỗi chỉnh sửa ảnh', 'Chỉnh sửa ảnh không thành công.', 5000);
-                console.log(data);
             }
         })
         .catch((e) => {
@@ -569,7 +567,6 @@ deleteBtn.addEventListener('click', () => {
 
     //* HANDLE CONFIRM DELTE
     confirmDeleteBtn.addEventListener('click', () => {
-        console.log('xoa');
         loader.classList.remove('!hidden');
         confirmDeleteBtn.disabled = true;
 
